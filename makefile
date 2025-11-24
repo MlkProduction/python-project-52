@@ -1,3 +1,7 @@
+APP_DIR := hexlet-code
+RUN := cd $(APP_DIR) && uv run
+MANAGE := $(RUN) python manage.py
+
 compose-setup: compose-build compose-install
 
 compose-build:
@@ -22,31 +26,34 @@ install:
 	uv sync
 
 migrate:
-	uv run manage.py migrate
+	$(MANAGE) migrate
+
+collectstatic:
+	$(MANAGE) collectstatic --noinput
 
 setup:
 	cp -n .env.example .env || true
-	make install
-	make migrate
+	$(MAKE) install
+	$(MAKE) migrate
 
 start:
-	uv run manage.py runserver 0.0.0.0:8000
+	$(MANAGE) runserver 0.0.0.0:8000
 
 lint:
 	uv run ruff check .
 
 test:
-	uv run manage.py test
+	$(MANAGE) test
 
 check: test lint
 
 test-coverage:
-	uv run coverage run manage.py test python_django_blog
-	uv run coverage html
-	uv run coverage report
+	cd $(APP_DIR) && uv run coverage run manage.py test task_manager
+	cd $(APP_DIR) && uv run coverage html
+	cd $(APP_DIR) && uv run coverage report
 
 render-start:
-	gunicorn task_manager.wsgi
+	cd $(APP_DIR) && uv run gunicorn task_manager.wsgi
 
 build:
 	./build.sh
