@@ -1,0 +1,4 @@
+<form action="{% url 'users_delete' pk=user.id %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Удалить">
+</form>

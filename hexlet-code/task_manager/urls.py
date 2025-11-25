@@ -18,17 +18,20 @@ Including another URLconf
 from django.contrib import admin
 from django.shortcuts import render
 from django.urls import path
+from task_manager.models import Users
+from task_manager.views import index, users, users_edit, users_delete, users_create
+from django.contrib.auth import views as auth_views
 
-def index(request):
-    return render(
-        request,
-        "index.html",
-        context={
-            "who": "World",
-        },
-    )
+
+
+
 
 urlpatterns = [
     path("", index, name="home"),
     path("admin/", admin.site.urls),
+    path('users/', users, name='users'),
+    path('users/<int:pk>/edit', users_edit, name='users_edit'), 
+    path('users/<int:pk>/delete', users_delete, name='users_delete'), 
+    path('users/create/', users_create, name='create'), 
+    path("login/", auth_views.LoginView.as_view(), name="login"),
 ]

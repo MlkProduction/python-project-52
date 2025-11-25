@@ -1,11 +1,34 @@
-<!doctype html>
-<html lang="ru">
+{% load django_bootstrap5 %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
   <head>
-    <meta charset="utf-8" />
-    <title>Task Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% translate "Django" %}</title>
+    {% bootstrap_css %}
   </head>
-  <body>
-    <h1>Hello, {{ who }}!</h1>
-    <p>Приложение Django успешно запущено.</p>
+  <body class="bg-light">
+    <div class="container mt-4">
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{%url 'users'%}">{% translate "Пользователи" %}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{%url 'login'%}">{% translate "Вход" %}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{%url 'create'%}">{% translate "Регистрация" %}</a>
+        </li>
+      </ul>
+    </div>
+    <div class="container mt-4">
+      <h1>
+        Я есть Django
+      </h1>
+ 
+    </div>
   </body>
 </html>

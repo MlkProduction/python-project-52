@@ -1,0 +1,54 @@
+{% load django_bootstrap5 %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% translate "Django" %}</title>
+    {% bootstrap_css %}
+  </head>
+  <body class="bg-light">
+    <div class="container mt-4">
+    <table class="table mt-5 table-bordered table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Full Name</th>
+            <th>Date </th>
+            <th></th>
+            </tr>
+            <tbody>
+              {% for user in users %}
+              <tr>
+                  <td>{{ user.id }}</td>
+                  <td>{{ user.username }}</td>
+                  <td>{{ user.fullname }}</td>
+                  <td>{{ user.created_at }}</td>
+          
+                  <td>
+                      <a class="btn btn-sm btn-outline-primary"
+                         href="{% url 'users_edit' pk=user.id %}">
+                          {% translate "Edit" %}
+                      </a>
+          
+                      <a class="btn btn-sm btn-outline-danger"
+                         href="{% url 'users_delete' pk=user.id %}">
+                          {% translate "Delete" %}
+                      </a>
+                  </td>
+              </tr>
+              {% endfor %}
+          </tbody>
+    </div>
+    <div class="container mt-4">
+      <h1>
+        Я есть Django User
+      </h1>
+ 
+    </div>
+  </body>
+</html>

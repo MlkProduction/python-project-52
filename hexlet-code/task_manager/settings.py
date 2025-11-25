@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 
+import dj_database_url
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,7 +29,7 @@ SECRET_KEY = "django-insecure-i6%gilr7$^=02*axdfjum78l_vhx$_*%%t*wx3jt1*s*-^mqlw
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['http://127.0.0.1:8000/', 'python-project-52-09xa.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'python-project-52-09xa.onrender.com']
 
 
 # Application definition
@@ -39,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_bootstrap5",
     "task_manager",
 ]
 
@@ -75,11 +78,9 @@ WSGI_APPLICATION = "task_manager.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR / 'db.sqlite3'}")
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    "default": dj_database_url.config(default=DATABASE_URL, conn_max_age=600),
 }
 
 
@@ -124,3 +125,6 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGIN_REDIRECT_URL = "/"
+LOGIN_URL = "/login/"
