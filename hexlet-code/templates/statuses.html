@@ -1,0 +1,50 @@
+{% load django_bootstrap5 %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% translate "Django" %}</title>
+    {% bootstrap_css %}
+  </head>
+  <body class="bg-light">
+    <div class="container mt-4">
+    <table class="table mt-5 table-bordered table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th></th>
+            </tr>
+            <tbody>
+              {% for status in statuses %}
+              <tr>
+                  <td>{{ status.id }}</td>
+                  <td>{{ status.name }}</td>
+          
+                  <td>
+                      <a class="btn btn-sm btn-outline-primary"
+                         href="{% url 'statuses_edit' pk=status.id %}">
+                          {% translate "Edit" %}
+                      </a>
+          
+                      <a class="btn btn-sm btn-outline-danger"
+                         href="{% url 'statuses_delete' pk=status.id %}">
+                          {% translate "Delete" %}
+                      </a>
+                  </td>
+              </tr>
+              {% endfor %}
+          </tbody>
+    </div>
+    <div class="container mt-4">
+      <h1>
+        Я есть Django User
+      </h1>
+ 
+    </div>
+  </body>
+</html>

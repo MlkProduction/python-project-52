@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from task_manager.models import Users
+from task_manager.models import Users, Statuses
 
 
 class RegistrationForm(UserCreationForm):
@@ -18,7 +18,6 @@ class RegistrationForm(UserCreationForm):
         user.last_name = self.cleaned_data["last_name"]
         if commit:
             user.save()
-            # Создаём связанную запись Users
             Users.objects.create(
                 user=user,
                 username=user.username,
@@ -31,3 +30,9 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = Users
         fields = ("username", "fullname")
+
+class StatusesCreateForm(forms.ModelForm):
+    class Meta:
+        model = Statuses
+        fields = ("name",)
+

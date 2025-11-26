@@ -1,7 +1,7 @@
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
-from task_manager.models import Users
+from task_manager.models import Users, Statuses
 
 
 class UserCRUDTestCase(TestCase):
@@ -35,4 +35,38 @@ class UserCRUDTestCase(TestCase):
         user = User.objects.create_user(username='test', password='test')
         users_profile = Users.objects.create(user=user, username='test', fullname='Test')
         response = client.post(reverse('users_delete', kwargs={'pk': users_profile.pk}))
+        self.assertEqual(response.status_code, 302)
+
+
+class StatusesCRUDTestCase(TestCase):
+    def test_create_status(self):
+        client = Client()
+        user = User.objects.create_user(username='test', password='test')
+        client.login(username='test', password='test')
+        data = {'name': 'new status'}
+        response = client.post(reverse('statuses_create'), data=data)
+        self.assertEqual(response.status_code, 302)
+
+    def test_read_statuses(self):
+        client = Client()
+        user = User.objects.create_user(username='test', password='test')
+        client.login(username='test', password='test')
+        response = client.get(reverse('statuses'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_update_status(self):
+        client = Client()
+        user = User.objects.create_user(username='test', password='test')
+        client.login(username='test', password='test')
+        status = Statuses.objects.create(name='test status')
+        data = {'name': 'updated status'}
+        response = client.post(reverse('statuses_edit', kwargs={'pk': status.pk}), data=data)
+        self.assertEqual(response.status_code, 302)
+
+    def test_delete_status(self):
+        client = Client()
+        user = User.objects.create_user(username='test', password='test')
+        client.login(username='test', password='test')
+        status = Statuses.objects.create(name='test status')
+        response = client.post(reverse('statuses_delete', kwargs={'pk': status.pk}))
         self.assertEqual(response.status_code, 302)

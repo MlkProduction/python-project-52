@@ -1,6 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from task_manager.models import Users
-from task_manager.forms import RegistrationForm, UserUpdateForm
+from task_manager.models import Statuses, Users
+from task_manager.forms import RegistrationForm, UserUpdateForm, StatusesCreateForm
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+
 
 def index(request):
     return render(request, "index.html", {"who": "World"})
@@ -40,13 +43,52 @@ def users_create(request):
 
     return render(request, "register.html", {"form": form})
 
-def users_login(request):
+# def users_login(request):
+#     if request.method == "POST":
+#         form = RegistrationForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect("login")
+#             messages.success(request, 'Ты залогинен!')
+#     else:
+#         form = RegistrationForm()
+#     return render(request, "register.html", {"form": form})
+
+@login_required
+def statuses(request):
+    statuses_list = Statuses.objects.all()
+    return render(request, "statuses.html", {"statuses": statuses_list})
+
+@login_required
+def statuses_create(request):
     if request.method == "POST":
-        form = RegistrationForm(request.POST)
+        form = StatusesCreateForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("login")
+            return redirect("statuses")
     else:
-        form = RegistrationForm()
+        form = StatusesCreateForm()
 
-    return render(request, "register.html", {"form": form})
+    return render(request, "statuses_create.html", {"form": form})
+
+@login_required
+def statuses_delete(request, pk):
+    status = get_object_or_404(Statuses, pk=pk)
+    if request.method == "POST":
+        status.delete()
+        return redirect("statuses")
+    
+    return render(request, "statuses_delete.html", {"status": status})
+
+@login_required
+def statuses_edit(request, pk):
+    status = get_object_or_404(Statuses, pk=pk)
+    if request.method == "POST":
+        form = StatusesCreateForm(request.POST, instance=status)
+        if form.is_valid():  
+            form.save()
+            return redirect("statuses")
+    else:
+        form = StatusesCreateForm(instance=status)
+
+    return render(request, "statuses_updating.html", {"form": form, "status": status})

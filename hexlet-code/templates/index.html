@@ -12,16 +12,30 @@
   </head>
   <body class="bg-light">
     <div class="container mt-4">
+      {% bootstrap_messages %}
       <ul class="nav">
         <li class="nav-item">
           <a class="nav-link" href="{%url 'users'%}">{% translate "Пользователи" %}</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{%url 'login'%}">{% translate "Вход" %}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{%url 'create'%}">{% translate "Регистрация" %}</a>
-        </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <form method="post" action="{% url 'logout' %}" style="display: inline;">
+              {% csrf_token %}
+              <button type="submit" class="nav-link btn btn-link" style="border: none; padding: 0; background: none;">{% translate "Выход" %}</button>
+            </form>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'statuses' %}">{% translate "Статусы" %}</a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">{% translate "Вход" %}</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'create' %}">{% translate "Регистрация" %}</a>
+          </li>
+        {% endif %}
       </ul>
     </div>
     <div class="container mt-4">

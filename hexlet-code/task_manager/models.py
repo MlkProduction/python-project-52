@@ -9,7 +9,15 @@ class Users(models.Model):
     fullname = models.CharField(max_length=300)
     created_at = models.DateTimeField(default=timezone.now)
 
-    
     def __str__(self):
         return self.username
+
+class Statuses(models.Model):
+    name = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.name
+
+    
+
         
