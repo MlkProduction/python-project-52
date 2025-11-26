@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from task_manager.models import Statuses, Users
-from task_manager.forms import RegistrationForm, UserUpdateForm, StatusesCreateForm
+from task_manager.models import Statuses, Tasks, Users
+from task_manager.forms import RegistrationForm, TasksCreateForm, UserUpdateForm, StatusesCreateForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
@@ -53,7 +53,7 @@ def users_create(request):
 #     else:
 #         form = RegistrationForm()
 #     return render(request, "register.html", {"form": form})
-
+# СТАТУСЫ
 @login_required
 def statuses(request):
     statuses_list = Statuses.objects.all()
@@ -92,3 +92,44 @@ def statuses_edit(request, pk):
         form = StatusesCreateForm(instance=status)
 
     return render(request, "statuses_updating.html", {"form": form, "status": status})
+
+# ТАСКИ
+
+@login_required
+def tasks(request):
+    tasks_list = Tasks.objects.all()
+    return render(request, "tasks.html", {"tasks": tasks_list})
+
+@login_required
+def tasks_create(request):
+    if request.method == "POST":
+        form = TasksCreateForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("tasks")
+    else:
+        form = TasksCreateForm()
+
+    return render(request, "tasks_create.html", {"form": form})
+
+@login_required
+def tasks_delete(request, pk):
+    task = get_object_or_404(Tasks, pk=pk)
+    if request.method == "POST":
+        task.delete()
+        return redirect("tasks")
+    
+    return render(request, "tasks_delete.html", {"task": task})
+
+@login_required
+def tasks_edit(request, pk):
+    task = get_object_or_404(Tasks, pk=pk)
+    if request.method == "POST":
+        form = TasksCreateForm(request.POST, instance=task)
+        if form.is_valid():  
+            form.save()
+            return redirect("tasks")
+    else:
+        form = TasksCreateForm(instance=task)
+
+    return render(request, "tasks_updating.html", {"form": form, "task": task})

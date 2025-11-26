@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from task_manager.models import Users, Statuses
+from task_manager.models import Users, Statuses, Tasks
 
 
 class RegistrationForm(UserCreationForm):
@@ -35,4 +35,9 @@ class StatusesCreateForm(forms.ModelForm):
     class Meta:
         model = Statuses
         fields = ("name",)
+
+class TasksCreateForm(forms.ModelForm):
+    class Meta:
+        model = Tasks
+        fields = ("name", "status", "author", "executor") # еще будут метки и исполнитель
 

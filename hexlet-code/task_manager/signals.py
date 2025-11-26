@@ -5,5 +5,5 @@ from django.contrib import messages
 
 @receiver(user_logged_in)
 def on_user_login(sender, request, user, **kwargs):
-    messages.success(request, 'Ты залогинен!')
+    messages.success(request, 'Вы залогинены', fail_silently=True)
 
