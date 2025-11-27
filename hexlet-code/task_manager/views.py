@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from task_manager.models import Labels, Statuses, Tasks, Users
 from task_manager.forms import LabelsCreateForm, RegistrationForm, TasksCreateForm, UserUpdateForm, StatusesCreateForm
+from task_manager.filters import TaskFilter
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
@@ -11,7 +12,8 @@ def index(request):
 def users(request):
     users = Users.objects.all()
     return render(request, "users.html", {"users": users})
-
+    
+@login_required
 def users_edit(request, pk):
     user = get_object_or_404(Users, pk=pk)
     if request.method == "POST":
@@ -24,6 +26,7 @@ def users_edit(request, pk):
     
     return render(request, "updating.html", {"form": form, "user": user})
 
+@login_required
 def users_delete(request, pk):
     user = get_object_or_404(Users, pk=pk)
     if request.method == "POST":
@@ -31,6 +34,7 @@ def users_delete(request, pk):
         return redirect("users")
     
     return render(request, "users_delete.html", {"user": user})
+
 
 def users_create(request):
     if request.method == "POST":
@@ -43,16 +47,6 @@ def users_create(request):
 
     return render(request, "register.html", {"form": form})
 
-# def users_login(request):
-#     if request.method == "POST":
-#         form = RegistrationForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect("login")
-#             messages.success(request, 'Ты залогинен!')
-#     else:
-#         form = RegistrationForm()
-#     return render(request, "register.html", {"form": form})
 # СТАТУСЫ
 @login_required
 def statuses(request):
@@ -98,7 +92,16 @@ def statuses_edit(request, pk):
 @login_required
 def tasks(request):
     tasks_list = Tasks.objects.all()
-    return render(request, "tasks.html", {"tasks": tasks_list})
+    
+    task_filter = TaskFilter(request.GET, queryset=tasks_list)
+    filtered_tasks = task_filter.qs
+     
+    if request.GET.get('self_tasks') == 'on':
+        user_profile = Users.objects.filter(user=request.user).first()
+        if user_profile:
+            filtered_tasks = filtered_tasks.filter(author=user_profile)
+    
+    return render(request, "tasks.html", {"tasks": filtered_tasks, "filter": task_filter})
 
 @login_required
 def tasks_create(request):
@@ -130,12 +133,10 @@ def tasks_edit(request, pk):
         form = TasksCreateForm(request.POST, instance=task)
         if form.is_valid():  
             task = form.save()
-            # Сохраняем выбранные метки
             task.labels.set(form.cleaned_data['labels'])
             return redirect("tasks")
     else:
         form = TasksCreateForm(instance=task)
-        # Показываем уже выбранные метки
         form.fields['labels'].initial = task.labels.all()
 
     return render(request, "tasks_updating.html", {"form": form, "task": task})

@@ -1,4 +1,14 @@
-<form action="{% url 'statuses_delete' pk=status.id %}" method="post">
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+{% block title %}{% translate "Удалить статус" %}{% endblock %}
+
+{% block content %}
+  <h2 class="mb-4">{% translate "Удалить статус" %}</h2>
+  <p>{% translate "Вы уверены, что хотите удалить статус" %} "{{ status.name }}"?</p>
+  <form action="{% url 'statuses_delete' pk=status.id %}" method="post">
     {% csrf_token %}
-    <input type="submit" value="Удалить">
-</form>
+    <input type="submit" value="{% translate 'Удалить' %}" class="btn btn-danger">
+  </form>
+{% endblock %}

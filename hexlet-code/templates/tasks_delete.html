@@ -1,4 +1,14 @@
-<form action="{% url 'tasks_delete' pk=task.id %}" method="post">
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+{% block title %}{% translate "Удалить задачу" %}{% endblock %}
+
+{% block content %}
+  <h2 class="mb-4">{% translate "Удалить задачу" %}</h2>
+  <p>{% translate "Вы уверены, что хотите удалить задачу" %} "{{ task.name }}"?</p>
+  <form action="{% url 'tasks_delete' pk=task.id %}" method="post">
     {% csrf_token %}
-    <input type="submit" value="Удалить">
-</form>
+    <input type="submit" value="{% translate 'Удалить' %}" class="btn btn-danger">
+  </form>
+{% endblock %}

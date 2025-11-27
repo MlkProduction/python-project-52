@@ -1,17 +1,26 @@
-{% if form.errors %}
-    <div>
-        <ul>
-        {% for error in form.errors %}
-            <li><strong>{{ error|escape }}</strong></li>
-        {% endfor %}
-        </ul>
-    </div>
-{% endif %}
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% load i18n %}
 
-<form action="{% url 'users_edit' pk=user.id %}" method="post">
+{% block title %}{% translate "Изменить пользователя" %}{% endblock %}
+
+{% block content %}
+  <h2 class="mb-4">{% translate "Изменить пользователя" %}</h2>
+  {% if form.errors %}
+    <div>
+      <ul>
+      {% for error in form.errors %}
+        <li><strong>{{ error|escape }}</strong></li>
+      {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  <form action="{% url 'users_edit' pk=user.id %}" method="post">
     {% csrf_token %}
     <table border="1">
     {{ form }}
     </table>
-    <input type="submit" value="Сохранить">
-</form>
+    <input type="submit" value="{% translate 'Сохранить' %}">
+  </form>
+{% endblock %}

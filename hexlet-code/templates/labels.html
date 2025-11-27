@@ -1,53 +1,39 @@
+{% extends "base.html" %}
 {% load django_bootstrap5 %}
 {% load i18n %}
-{% get_current_language as LANGUAGE_CODE %}
 
+{% block title %}{% translate "Метки" %}{% endblock %}
 
-<!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE }}">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{% translate "Django" %}</title>
-    {% bootstrap_css %}
-  </head>
-  <body class="bg-light">
-    <div class="container mt-4">
-    <table class="table mt-5 table-bordered table-striped table-hover">
-        <thead class="table-dark">
-            <tr>
-            <th>ID</th>
-            <th>Имя</th>
-            <th>Дата создания</th>
-            <th>Действия</th>
-            </tr>
-        </thead>
-        <tbody>
-              {% for label in labels %}
-              <tr>
-                  <td>{{ label.id }}</td>
-                  <td>{{ label.name }}</td>
-                  <td>{{ label.created_at }}</td>
-                  <td>
-                      <a class="btn btn-sm btn-outline-primary"
-                         href="{% url 'labels_edit' pk=label.id %}">
-                          {% translate "Исправить" %}
-                      </a>
-          
-                      <a class="btn btn-sm btn-outline-danger"
-                         href="{% url 'labels_delete' pk=label.id %}">
-                          {% translate "Удалить" %}
-                      </a>
-                  </td>
-              </tr>
-              {% endfor %}
-          </tbody>
-      </table>
-    </div>
-    <div class="container mt-4">
-      <h1>
-        Я есть Django User
-      </h1>
- 
-    </div>
-  </body>
-</html>
+{% block content %}
+  <h2 class="mb-4">{% translate "Метки" %}</h2>
+  <a href="{% url 'labels_create' %}" class="btn btn-success mb-3">{% translate "Создать метку" %}</a>
+  <table class="table mt-3 table-bordered table-striped table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>{% translate "Имя" %}</th>
+        <th>{% translate "Дата создания" %}</th>
+        <th>{% translate "Действия" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for label in labels %}
+      <tr>
+        <td>{{ label.id }}</td>
+        <td>{{ label.name }}</td>
+        <td>{{ label.created_at }}</td>
+        <td>
+          <a class="btn btn-sm btn-outline-primary"
+             href="{% url 'labels_edit' pk=label.id %}">
+            {% translate "Исправить" %}
+          </a>
+          <a class="btn btn-sm btn-outline-danger"
+             href="{% url 'labels_delete' pk=label.id %}">
+            {% translate "Удалить" %}
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

@@ -1,54 +1,89 @@
+{% extends "base.html" %}
 {% load django_bootstrap5 %}
 {% load i18n %}
-{% get_current_language as LANGUAGE_CODE %}
 
+{% block title %}{% translate "Главная" %}{% endblock %}
 
-<!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE }}">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{% translate "Django" %}</title>
-    {% bootstrap_css %}
-  </head>
-  <body class="bg-light">
-    <div class="container mt-4">
-      {% bootstrap_messages %}
-      <ul class="nav">
-        <li class="nav-item">
-          <a class="nav-link" href="{%url 'users'%}">{% translate "Пользователи" %}</a>
-        </li>
-          {% if user.is_authenticated %}
-          <li class="nav-item">
-            <form method="post" action="{% url 'logout' %}" style="display: inline;">
-              {% csrf_token %}
-              <button type="submit" class="nav-link btn btn-link" style="border: none; padding: 0; background: none;">{% translate "Выход" %}</button>
-            </form>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'statuses' %}">{% translate "Статусы" %}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'tasks' %}">{% translate "Задачи" %}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'labels' %}">{% translate "Метки" %}</a>
-          </li>
-        {% else %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}">{% translate "Вход" %}</a>
-          </li>
+{% block content %}
+  <div class="text-center py-5 mb-5">
+    <h1 class="display-4 fw-bold mb-3">{% translate "Готов планировать?" %}</h1>
+    <p class="lead text-muted">{% translate "Управляйте задачами эффективно и достигайте своих целей" %}</p>
+  </div>
 
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'create' %}">{% translate "Регистрация" %}</a>
-          </li>
-        {% endif %}
-      </ul>
+  {% if user.is_authenticated %}
+    <div class="row mb-4">
+      <div class="col-md-3 mb-3">
+        <div class="card text-center border-primary">
+          <div class="card-body">
+            <h5 class="card-title">📋 {% translate "Задачи" %}</h5>
+            <p class="card-text">
+              <a href="{% url 'tasks' %}" class="btn btn-primary w-100">{% translate "Управление" %}</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <div class="card text-center border-success">
+          <div class="card-body">
+            <h5 class="card-title">🏷️ {% translate "Статусы" %}</h5>
+            <p class="card-text">
+              <a href="{% url 'statuses' %}" class="btn btn-success w-100">{% translate "Управление" %}</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <div class="card text-center border-info">
+          <div class="card-body">
+            <h5 class="card-title">🏷️ {% translate "Метки" %}</h5>
+            <p class="card-text">
+              <a href="{% url 'labels' %}" class="btn btn-info w-100">{% translate "Управление" %}</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <div class="card text-center border-secondary">
+          <div class="card-body">
+            <h5 class="card-title">👥 {% translate "Пользователи" %}</h5>
+            <p class="card-text">
+              <a href="{% url 'users' %}" class="btn btn-secondary w-100">{% translate "Список" %}</a>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="container mt-4">
-      <h1>
-        Я есть Django
-      </h1>
- 
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">🚀 {% translate "Быстрые действия" %}</h5>
+            <a href="{% url 'tasks_create' %}" class="btn btn-primary mb-2 w-100">{% translate "Создать задачу" %}</a>
+            <a href="{% url 'statuses_create' %}" class="btn btn-success mb-2 w-100">{% translate "Создать статус" %}</a>
+            <a href="{% url 'labels_create' %}" class="btn btn-info w-100">{% translate "Создать метку" %}</a>
+          </div>
+        </div>
+      </div>
+
     </div>
-  </body>
-</html>
+  {% else %}
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow">
+          <div class="card-body text-center p-5">
+            <h3 class="card-title mb-4">{% translate "Начните работу прямо сейчас!" %}</h3>
+            <p class="card-text text-muted mb-4">
+              {% translate "Войдите в систему или зарегистрируйтесь, чтобы начать управлять задачами" %}
+            </p>
+            <div class="d-grid gap-2">
+              <a href="{% url 'login' %}" class="btn btn-primary btn-lg">{% translate "Войти" %}</a>
+              <a href="{% url 'create' %}" class="btn btn-outline-primary btn-lg">{% translate "Зарегистрироваться" %}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

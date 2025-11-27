@@ -1,7 +1,15 @@
-<form action="{% url 'statuses_create' %}" method="post">
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+{% block title %}{% translate "Создать статус" %}{% endblock %}
+
+{% block content %}
+  <h2 class="mb-4">{% translate "Создать статус" %}</h2>
+  <form action="{% url 'statuses_create' %}" method="post">
     {% csrf_token %}
-    <table border="1">
-    {{ form }}
-    </table>
-    <input type="submit" value="Создать">
-</form>
+    {% bootstrap_form form layout='vertical' %}
+
+    {% bootstrap_button "Создать" button_type="submit" button_class="btn-primary w-25" %}
+  </form>
+{% endblock %}
