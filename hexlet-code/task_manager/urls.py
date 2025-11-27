@@ -18,8 +18,8 @@ Including another URLconf
 from django.contrib import admin
 from django.shortcuts import render
 from django.urls import path
-from task_manager.models import Users
-from task_manager.views import index, statuses_create, tasks, tasks_create, statuses, tasks_delete, tasks_edit, users, users_edit, users_delete, users_create, statuses_delete, statuses_edit
+from task_manager.models import Labels, Users
+from task_manager.views import index, labels, statuses_create, labels_create, labels_edit, labels_delete, tasks, tasks_create, statuses, tasks_delete, tasks_edit, users, users_edit, users_delete, users_create, statuses_delete, statuses_edit
 from django.contrib.auth import views as auth_views
 
 
@@ -43,4 +43,8 @@ urlpatterns = [
     path('tasks/create/', tasks_create, name='tasks_create'),
     path('tasks/<int:pk>/edit', tasks_edit, name='tasks_edit'), 
     path('tasks/<int:pk>/delete', tasks_delete, name='tasks_delete'),     
+    path('labels/', labels, name='labels'),   
+    path('labels/create/', labels_create, name='labels_create'),
+    path('labels/<int:pk>/edit', labels_edit, name='labels_edit'), 
+    path('labels/<int:pk>/delete', labels_delete, name='labels_delete'),  
 ]

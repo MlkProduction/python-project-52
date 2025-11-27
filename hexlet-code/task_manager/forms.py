@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from task_manager.models import Users, Statuses, Tasks
+from task_manager.models import Labels, Users, Statuses, Tasks
 
 
 class RegistrationForm(UserCreationForm):
@@ -37,7 +37,18 @@ class StatusesCreateForm(forms.ModelForm):
         fields = ("name",)
 
 class TasksCreateForm(forms.ModelForm):
+    labels = forms.ModelMultipleChoiceField(
+        queryset=Labels.objects.all(),
+        required=False,
+        widget=forms.SelectMultiple(attrs={'size': '5'}),
+        label="Метки"
+    )
+    
     class Meta:
         model = Tasks
-        fields = ("name", "status", "author", "executor") # еще будут метки и исполнитель
+        fields = ("name", "status", "author", "executor")
 
+class LabelsCreateForm(forms.ModelForm):
+    class Meta:
+        model = Labels
+        fields = ("name",)

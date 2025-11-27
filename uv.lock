@@ -12,6 +12,18 @@ wheels = [
 ]
 
 [[package]]
+name = "dj-database-url"
+version = "3.0.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/75/05/2ec51009f4ce424877dbd8ad95868faec0c3494ed0ff1635f9ab53d9e0ee/dj_database_url-3.0.1.tar.gz", hash = "sha256:8994961efb888fc6bf8c41550870c91f6f7691ca751888ebaa71442b7f84eff8", size = 12556, upload-time = "2025-07-02T09:40:11.424Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/aa/5e/86a43c6fdaa41c12d58e4ff3ebbfd6b71a7cb0360a08614e3754ef2e9afb/dj_database_url-3.0.1-py3-none-any.whl", hash = "sha256:43950018e1eeea486bf11136384aec0fe55b29fe6fd8a44553231b85661d9383", size = 8808, upload-time = "2025-07-02T09:40:26.326Z" },
+]
+
+[[package]]
 name = "django"
 version = "5.2.8"
 source = { registry = "https://pypi.org/simple" }
@@ -23,6 +35,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/05/a2/933dbbb3dd9990494960f6e64aca2af4c0745b63b7113f59a822df92329e/django-5.2.8.tar.gz", hash = "sha256:23254866a5bb9a2cfa6004e8b809ec6246eba4b58a7589bc2772f1bcc8456c7f", size = 10849032, upload-time = "2025-11-05T14:07:32.778Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/5e/3d/a035a4ee9b1d4d4beee2ae6e8e12fe6dee5514b21f62504e22efcbd9fb46/django-5.2.8-py3-none-any.whl", hash = "sha256:37e687f7bd73ddf043e2b6b97cfe02fcbb11f2dbb3adccc6a2b18c6daa054d7f", size = 8289692, upload-time = "2025-11-05T14:07:28.761Z" },
+]
+
+[[package]]
+name = "django-bootstrap5"
+version = "25.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/60/73/764367acc94f22b68f1ff8d39be511afa0315fd83299abdd6542bdeffdb4/django_bootstrap5-25.3.tar.gz", hash = "sha256:cc36f1a19d3200c0f5628c703320edb5c4e39e19bf17607fadf58ddb11828912", size = 49738, upload-time = "2025-11-14T13:00:13.316Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/56/0d/ae17205ff3f9e04deb364b037c506ff94166c23b0a7424208d39174c84f9/django_bootstrap5-25.3-py3-none-any.whl", hash = "sha256:3d381a5329a1439ac3237456c28cc8170c62b4c56ad3564d57876ffc3d4c5e78", size = 26772, upload-time = "2025-11-14T13:00:11.709Z" },
 ]
 
 [[package]]
@@ -42,13 +66,17 @@ name = "hexlet-code"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "dj-database-url" },
     { name = "django" },
+    { name = "django-bootstrap5" },
     { name = "gunicorn" },
 ]
 
 [package.metadata]
 requires-dist = [
+    { name = "dj-database-url", specifier = ">=2.2" },
     { name = "django", specifier = ">=5.0,<6.0" },
+    { name = "django-bootstrap5", specifier = ">=24.2" },
     { name = "gunicorn", specifier = ">=23.0" },
 ]
 

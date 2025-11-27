@@ -24,6 +24,19 @@ class Tasks(models.Model):
     author = models.ForeignKey(Users, on_delete=models.PROTECT, related_name='authored_tasks', null=True, blank=True) #id?
     executor = models.ForeignKey(Users, on_delete=models.PROTECT, related_name='executed_tasks', null=True, blank=True)
     created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.name
+
+
+class Labels(models.Model):
+    name = models.CharField(max_length=300)
+    tasks = models.ManyToManyField(Tasks, related_name='labels', blank=True)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.name
+
     
 
         

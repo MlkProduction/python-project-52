@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from task_manager.models import Statuses, Tasks, Users
-from task_manager.forms import RegistrationForm, TasksCreateForm, UserUpdateForm, StatusesCreateForm
+from task_manager.models import Labels, Statuses, Tasks, Users
+from task_manager.forms import LabelsCreateForm, RegistrationForm, TasksCreateForm, UserUpdateForm, StatusesCreateForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
@@ -105,7 +105,9 @@ def tasks_create(request):
     if request.method == "POST":
         form = TasksCreateForm(request.POST)
         if form.is_valid():
-            form.save()
+            task = form.save()
+            # Сохраняем выбранные метки
+            task.labels.set(form.cleaned_data['labels'])
             return redirect("tasks")
     else:
         form = TasksCreateForm()
@@ -127,9 +129,55 @@ def tasks_edit(request, pk):
     if request.method == "POST":
         form = TasksCreateForm(request.POST, instance=task)
         if form.is_valid():  
-            form.save()
+            task = form.save()
+            # Сохраняем выбранные метки
+            task.labels.set(form.cleaned_data['labels'])
             return redirect("tasks")
     else:
         form = TasksCreateForm(instance=task)
+        # Показываем уже выбранные метки
+        form.fields['labels'].initial = task.labels.all()
 
     return render(request, "tasks_updating.html", {"form": form, "task": task})
+
+#   ЛЕЙБЛЫ
+
+@login_required
+def labels(request):
+    labels_list = Labels.objects.all()
+    return render(request, "labels.html", {"labels": labels_list})
+
+@login_required
+def labels_create(request):
+    if request.method == "POST":
+        form = LabelsCreateForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("labels")
+    else:
+        form = LabelsCreateForm()
+
+    return render(request, "labels_create.html", {"form": form})
+
+@login_required
+def labels_delete(request, pk):
+    label = get_object_or_404(Labels, pk=pk)
+    if request.method == "POST":
+        label.delete()
+        return redirect("labels")
+    
+    return render(request, "labels_delete.html", {"label": label})
+
+@login_required
+def labels_edit(request, pk):
+    label = get_object_or_404(Labels, pk=pk)
+    if request.method == "POST":
+        form = LabelsCreateForm(request.POST, instance=label)
+        if form.is_valid():  
+            form.save()
+            return redirect("labels")
+    else:
+        form = LabelsCreateForm(instance=label)
+
+    return render(request, "labels_updating.html", {"form": form, "label": label})
+
