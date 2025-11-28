@@ -22,10 +22,10 @@ install:
 	uv sync
 
 migrate:
-	cd hexlet-code && uv run -- python manage.py migrate
+	uv run python manage.py migrate
 
 collectstatic:
-	cd hexlet-code && uv run -- python manage.py collectstatic --noinput
+	uv run python manage.py collectstatic --noinput
 
 setup:
 	cp -n .env.example .env || true
@@ -33,23 +33,23 @@ setup:
 	make migrate
 
 start:
-	cd hexlet-code && uv run -- python manage.py runserver 0.0.0.0:8000
+	uv run python manage.py runserver 0.0.0.0:8000
 
 lint:
 	uv run ruff check .
 
 test:
-	cd hexlet-code && uv run -- python manage.py test
+	uv run python manage.py test
 
 check: test lint
 
 test-coverage:
-	cd hexlet-code && uv run -- coverage run manage.py test task_manager
-	cd hexlet-code && uv run -- coverage html
-	cd hexlet-code && uv run -- coverage report
+	uv run coverage run manage.py test task_manager
+	uv run coverage html
+	uv run coverage report
 
 render-start:
-	cd hexlet-code && uv run -- gunicorn task_manager.wsgi
+	uv run gunicorn task_manager.wsgi
 
 build:
 	./build.sh
