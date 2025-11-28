@@ -38,6 +38,7 @@ class RegistrationForm(UserCreationForm):
 class UserUpdateForm(forms.ModelForm):
     first_name = forms.CharField(max_length=30, required=True, label="Имя")
     last_name = forms.CharField(max_length=30, required=True, label="Фамилия")
+    username = forms.CharField(max_length=150, required=True, label="Имя пользователя")
     password1 = forms.CharField(
         widget=forms.PasswordInput,
         required=False,
