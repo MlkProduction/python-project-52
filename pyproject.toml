@@ -27,4 +27,5 @@ package = true
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "task_manager.settings"
 pythonpath = ["."]
+addopts = "--migrate"
 
