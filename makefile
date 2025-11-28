@@ -28,10 +28,10 @@ install:
 	uv sync
 
 migrate:
-	uv run python manage.py migrate
+	uv run manage.py migrate
 
 collectstatic:
-	uv run python manage.py collectstatic --noinput
+	uv run manage.py collectstatic --no-input
 
 setup:
 	cp -n .env.example .env || true
@@ -40,13 +40,13 @@ setup:
 	make migrate
 
 start:
-	uv run python manage.py runserver 0.0.0.0:8000
+	uv run manage.py runserver 0.0.0.0:8000
 
 lint:
 	uv run ruff check .
 
 test:
-	uv run python manage.py test
+	uv run manage.py test
 
 check: test lint
 

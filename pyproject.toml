@@ -24,14 +24,9 @@ packages = ["task_manager"]
 [tool.uv]
 package = true
 
-[tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "task_manager.settings"
-pythonpath = ["."]
-addopts = "--migrate"
-
 [tool.ruff]
-exclude = [
-    "migrations",
-    "task_manager/settings.py",
-]
+line-length = 79
+select = ["E", "W", "F", "I"]
+ignore = ["E501"]
+extend-exclude = ["venv", ".venv", "migrations", "task_manager/settings.py"]
 
