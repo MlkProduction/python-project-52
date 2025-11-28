@@ -29,3 +29,9 @@ DJANGO_SETTINGS_MODULE = "task_manager.settings"
 pythonpath = ["."]
 addopts = "--migrate"
 
+[tool.ruff]
+exclude = [
+    "migrations",
+    "task_manager/settings.py",
+]
+
