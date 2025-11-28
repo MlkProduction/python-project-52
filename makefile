@@ -22,7 +22,7 @@ install:
 	uv sync
 
 migrate:
-	uv run python manage.py migrate
+	uv run manage.py migrate
 
 collectstatic:
 	uv run python manage.py collectstatic --noinput
@@ -49,7 +49,7 @@ test-coverage:
 	uv run coverage report
 
 render-start:
-	uv run gunicorn task_manager.wsgi
+	uv run -- gunicorn task_manager.wsgi
 
 build:
 	./build.sh
