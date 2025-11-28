@@ -1,36 +1,26 @@
 [project]
 name = "hexlet-code"
 version = "0.1.0"
-description = "Django Task Manager project."
+description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.13"
 dependencies = [
-  "django>=5.0,<6.0",
-  "gunicorn>=23.0",
-  "dj-database-url>=2.2",
-  "django-bootstrap5>=24.2",
-  "django-filter>=24.0",
-  "rollbar>=0.16.0",
-  "psycopg2-binary>=2.9",
+    "dj-database-url>=3.0.1",
+    "django>=5.2.6",
+    "django-bootstrap5==25.1",
+    "django-filter>=25.2",
+    "gunicorn>=23.0.0",
+    "psycopg2-binary>=2.9.11",
+    "python-dotenv>=1.2.1",
 ]
 
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[tool.hatch.build.targets.wheel]
-packages = ["task_manager"]
-
-[tool.uv]
-package = true
+[dependency-groups]
+dev = [
+    "ruff>=0.14.2",
+]
 
 [tool.ruff]
 line-length = 79
 select = ["E", "W", "F", "I"]
 ignore = ["E501"]
-extend-exclude = ["venv", ".venv", "migrations", "task_manager/settings.py"]
-
-[tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "task_manager.settings"
-pythonpath = ["."]
-
+extend-exclude = ["venv", ".venv"]
