@@ -8,6 +8,14 @@ class RegistrationForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True, label="Имя")
     last_name = forms.CharField(max_length=30, required=True, label="Фамилия")
     username = forms.CharField(max_length=150, required=True, label="Имя пользователя")
+    password1 = forms.CharField(
+        widget=forms.PasswordInput,
+        label="Пароль"
+    )
+    password2 = forms.CharField(
+        widget=forms.PasswordInput,
+        label="Подтверждение пароля"
+    )
     
     class Meta:
         model = User
