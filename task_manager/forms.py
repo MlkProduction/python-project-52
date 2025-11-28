@@ -45,6 +45,7 @@ class UserUpdateForm(forms.ModelForm):
     )
     password2 = forms.CharField(
         widget=forms.PasswordInput,
+        required=False,
         label="Подтверждение пароля"
     )
     

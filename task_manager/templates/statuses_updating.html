@@ -18,9 +18,7 @@
 
   <form action="{% url 'statuses_edit' pk=status.id %}" method="post">
     {% csrf_token %}
-    <table border="1">
-    {{ form }}
-    </table>
-    <input type="submit" value="{% translate 'Сохранить' %}">
+    {% bootstrap_form form layout='vertical' %}
+    <button type="submit" class="btn btn-primary">{% translate 'Сохранить' %}</button>
   </form>
 {% endblock %}
