@@ -55,16 +55,12 @@ test-coverage:
 	uv run coverage html
 	uv run coverage report
 
-# -----------------------
-# Render deployment
-# -----------------------
+
 render-start:
 	uv run python manage.py migrate
 	uv run python manage.py collectstatic --noinput
 	uv run -- gunicorn task_manager.wsgi
 
-# -----------------------
-# Build project
-# -----------------------
+
 build:
 	./build.sh
