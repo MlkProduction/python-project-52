@@ -30,7 +30,7 @@ class RegistrationForm(UserCreationForm):
             Users.objects.create(
                 user=user,
                 username=user.username,
-             #   fullname=f"{user.first_name} {user.last_name}"
+                fullname=f"{user.first_name} {user.last_name}"
             )
         return user
 
@@ -52,7 +52,7 @@ class UserUpdateForm(forms.ModelForm):
     
     class Meta:
         model = Users
-        fields = ("username", )#"fullname"
+        fields = ("username","fullname")
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -64,7 +64,7 @@ class UserUpdateForm(forms.ModelForm):
         user_profile = super().save(commit=False)
         user_profile.user.first_name = self.cleaned_data['first_name']
         user_profile.user.last_name = self.cleaned_data['last_name']
-    #    user_profile.fullname = f"{self.cleaned_data['first_name']} {self.cleaned_data['last_name']}"
+        user_profile.fullname = f"{self.cleaned_data['first_name']} {self.cleaned_data['last_name']}"
         if commit:
             user_profile.user.save()
             user_profile.save()
