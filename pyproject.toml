@@ -30,3 +30,7 @@ select = ["E", "W", "F", "I"]
 ignore = ["E501"]
 extend-exclude = ["venv", ".venv", "migrations", "task_manager/settings.py"]
 
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "task_manager.settings"
+pythonpath = ["."]
+
