@@ -31,6 +31,7 @@ setup:
 	cp -n .env.example .env || true
 	make install
 	make migrate
+	make collectstatic
 
 start:
 	uv run python manage.py runserver 0.0.0.0:8000
@@ -49,6 +50,8 @@ test-coverage:
 	uv run coverage report
 
 render-start:
+	uv run python manage.py migrate
+	uv run python manage.py collectstatic --noinput
 	uv run -- gunicorn task_manager.wsgi
 
 build:
