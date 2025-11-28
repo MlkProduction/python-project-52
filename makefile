@@ -1,3 +1,6 @@
+# -----------------------
+# Docker / Compose helpers
+# -----------------------
 compose-setup: compose-build compose-install
 
 compose-build:
@@ -18,6 +21,9 @@ compose-lint:
 compose-test:
 	docker compose run app make test
 
+# -----------------------
+# Project commands
+# -----------------------
 install:
 	uv sync
 
@@ -30,8 +36,8 @@ collectstatic:
 setup:
 	cp -n .env.example .env || true
 	make install
-	make migrate
 	make collectstatic
+	make migrate
 
 start:
 	uv run python manage.py runserver 0.0.0.0:8000
@@ -49,10 +55,16 @@ test-coverage:
 	uv run coverage html
 	uv run coverage report
 
+# -----------------------
+# Render deployment
+# -----------------------
 render-start:
 	uv run python manage.py migrate
 	uv run python manage.py collectstatic --noinput
 	uv run -- gunicorn task_manager.wsgi
 
+# -----------------------
+# Build project
+# -----------------------
 build:
 	./build.sh
