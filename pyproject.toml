@@ -23,4 +23,4 @@ dev = [
 line-length = 79
 select = ["E", "W", "F", "I"]
 ignore = ["E501"]
-extend-exclude = ["venv", ".venv"]
+extend-exclude = ["venv", ".venv", "migrations", "task_manager/settings.py"]
