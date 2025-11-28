@@ -10,6 +10,6 @@
 <form action="{% url 'create' %}" method="post">
     {% csrf_token %}
     {% bootstrap_form form layout='vertical' %}
-    {% bootstrap_button "Регистрация" button_type="submit" button_class="btn-primary w-100" %}
+    {% bootstrap_button "Зарегистрировать" button_type="submit" button_class="btn-primary w-100" %}
 </form>
 {% endblock %}
