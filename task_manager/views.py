@@ -93,10 +93,11 @@ def statuses_edit(request, pk):
         form = StatusesCreateForm(request.POST, instance=status)
         if form.is_valid():  
             form.save()
+            messages.success(request, 'Статус успешно изменен')
             return redirect("statuses")
     else:
         form = StatusesCreateForm(instance=status)
-
+    
     return render(request, "statuses_updating.html", {"form": form, "status": status})
 
 # ТАСКИ
