@@ -82,6 +82,7 @@ def statuses_delete(request, pk):
     status = get_object_or_404(Statuses, pk=pk)
     if request.method == "POST":
         status.delete()
+        messages.success(request, 'Статус успешно удален')
         return redirect("statuses")
     
     return render(request, "statuses_delete.html", {"status": status})
