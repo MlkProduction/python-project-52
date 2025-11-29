@@ -94,11 +94,12 @@ def statuses_edit(request, pk):
         if form.is_valid():  
             form.save()
             messages.success(request, 'Статус успешно изменен')
-            return redirect("statuses_edit", pk=pk)
+            return redirect("statuses") 
     else:
         form = StatusesCreateForm(instance=status)
     
     return render(request, "statuses_updating.html", {"form": form, "status": status})
+
 
 # ТАСКИ
 
