@@ -4,6 +4,7 @@ from task_manager.forms import LabelsCreateForm, RegistrationForm, TasksCreateFo
 from task_manager.filters import TaskFilter
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView as BaseLoginView, LogoutView as BaseLogoutView
 
 
@@ -32,9 +33,16 @@ def users_edit(request, pk):
 def users_delete(request, pk):
     user = get_object_or_404(Users, pk=pk)
     if request.method == "POST":
-        user.delete()
-        messages.success(request, 'Пользователь успешно удален')
-        return redirect("users")
+        # Проверяем, удаляется ли текущий залогиненный пользователь
+        if user.user and user.user == request.user:
+            user.delete()
+            logout(request)
+            messages.success(request, 'Пользователь успешно удален')
+            return redirect("home")
+        else:
+            user.delete()
+            messages.success(request, 'Пользователь успешно удален')
+            return redirect("users")
     
     return render(request, "users_delete.html", {"user": user})
 
