@@ -20,6 +20,7 @@ def users_edit(request, pk):
         form = UserUpdateForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Пользователь успешно изменен')
             return redirect("users")
     else:
         form = UserUpdateForm(instance=user)
