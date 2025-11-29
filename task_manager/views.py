@@ -70,6 +70,7 @@ def statuses_create(request):
         form = StatusesCreateForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Статус успешно создан')
             return redirect("statuses")
     else:
         form = StatusesCreateForm()
