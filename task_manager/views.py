@@ -4,6 +4,7 @@ from task_manager.forms import LabelsCreateForm, RegistrationForm, TasksCreateFo
 from task_manager.filters import TaskFilter
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.views import LoginView as BaseLoginView, LogoutView as BaseLogoutView
 
 
 def index(request):
@@ -183,4 +184,16 @@ def labels_edit(request, pk):
         form = LabelsCreateForm(instance=label)
 
     return render(request, "labels_updating.html", {"form": form, "label": label})
+
+
+class LoginView(BaseLoginView):
+    def form_valid(self, form):
+        messages.success(self.request, 'Вы залогинены')
+        return super().form_valid(form)
+
+
+class LogoutView(BaseLogoutView):
+    def dispatch(self, request, *args, **kwargs):
+        messages.success(request, 'Вы разлогинены')
+        return super().dispatch(request, *args, **kwargs)
 
