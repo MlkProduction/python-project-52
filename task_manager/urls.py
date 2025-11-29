@@ -31,7 +31,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('users/', users, name='users'),
     path('users/<int:pk>/update/', users_edit, name='users_edit'), 
-    path('users/<int:pk>/delete', users_delete, name='users_delete'), 
+    path('users/<int:pk>/delete/', users_delete, name='users_delete'), 
     path('users/create/', users_create, name='create'), 
     path("login/", auth_views.LoginView.as_view(), name="login"),
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
