@@ -33,13 +33,14 @@ def users_edit(request, pk):
 def users_delete(request, pk):
     user = get_object_or_404(Users, pk=pk)
     if request.method == "POST":
-        # Проверяем, удаляется ли текущий залогиненный пользователь
         if user.user and user.user == request.user:
             user.delete()
             logout(request)
+            list(messages.get_messages(request)) 
+            messages.success(request, "Пользователь успешно удален")
         else:
             user.delete()
-        messages.success(request, "Пользователь успешно удален")
+            messages.success(request, "Пользователь успешно удален")
         return redirect("users")
     
     return render(request, "users_delete.html", {"user": user})
