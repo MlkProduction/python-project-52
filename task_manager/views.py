@@ -94,7 +94,7 @@ def statuses_edit(request, pk):
         if form.is_valid():  
             form.save()
             messages.success(request, 'Статус успешно изменен')
-            return redirect("statuses")
+            return redirect("statuses_edit", pk=pk)
     else:
         form = StatusesCreateForm(instance=status)
     
