@@ -192,6 +192,7 @@ def labels_edit(request, pk):
         form = LabelsCreateForm(request.POST, instance=label)
         if form.is_valid():  
             form.save()
+            messages.success(request, 'Метка успешно изменена')
             return redirect("labels")
     else:
         form = LabelsCreateForm(instance=label)
