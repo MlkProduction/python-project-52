@@ -118,6 +118,11 @@ def tasks(request):
     return render(request, "tasks.html", {"tasks": filtered_tasks, "filter": task_filter})
 
 @login_required
+def tasks_detail(request, pk):
+    task = get_object_or_404(Tasks, pk=pk)
+    return render(request, "tasks_detail.html", {"task": task})
+
+@login_required
 def tasks_create(request):
     if request.method == "POST":
         form = TasksCreateForm(request.POST)

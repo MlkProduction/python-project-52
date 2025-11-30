@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.shortcuts import render
 from django.urls import path
 from task_manager.models import Labels
-from task_manager.views import index, labels, statuses_create, labels_create, labels_edit, labels_delete, tasks, tasks_create, statuses, tasks_delete, tasks_edit, users, users_edit, users_delete, users_create, statuses_delete, statuses_edit, LoginView, LogoutView
+from task_manager.views import index, labels, statuses_create, labels_create, labels_edit, labels_delete, tasks, tasks_create, tasks_detail, statuses, tasks_delete, tasks_edit, users, users_edit, users_delete, users_create, statuses_delete, statuses_edit, LoginView, LogoutView
 from django.contrib.auth import views as auth_views
 
 
@@ -41,6 +41,7 @@ urlpatterns = [
     path('statuses/<int:pk>/delete/', statuses_delete, name='statuses_delete'), 
     path('tasks/', tasks, name='tasks'),    
     path('tasks/create/', tasks_create, name='tasks_create'),
+    path('tasks/<int:pk>/', tasks_detail, name='tasks_detail'),
     path('tasks/<int:pk>/update/', tasks_edit, name='tasks_edit'), 
     path('tasks/<int:pk>/delete/', tasks_delete, name='tasks_delete'),     
     path('labels/', labels, name='labels'),   
