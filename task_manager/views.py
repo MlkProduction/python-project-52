@@ -109,11 +109,8 @@ def statuses_edit(request, pk):
 def tasks(request):
     tasks_list = Tasks.objects.all()
     
-    task_filter = TaskFilter(request.GET, queryset=tasks_list)
+    task_filter = TaskFilter(request.GET, queryset=tasks_list, request=request)
     filtered_tasks = task_filter.qs
-     
-    if request.GET.get('self_tasks') == 'on':
-        filtered_tasks = filtered_tasks.filter(author=request.user)
     
     return render(request, "tasks.html", {"tasks": filtered_tasks, "filter": task_filter})
 
