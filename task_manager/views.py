@@ -91,9 +91,13 @@ def statuses_create(request):
 def statuses_delete(request, pk):
     status = get_object_or_404(Statuses, pk=pk)
     if request.method == "POST":
-        status.delete()
-        messages.success(request, 'Статус успешно удален')
-        return redirect("statuses")
+        try:
+            status.delete()
+            messages.success(request, 'Статус успешно удален')
+            return redirect("statuses")
+        except ProtectedError:
+            messages.error(request, "Невозможно удалить статус, потому что он используется")
+            return redirect("statuses")
     
     return render(request, "statuses_delete.html", {"status": status})
 
