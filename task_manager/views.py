@@ -39,7 +39,7 @@ def users_delete(request, pk):
     # Проверка прав: можно удалять только себя
     if user != request.user:
         messages.error(request, "У вас нет прав для изменения другого пользователя.")
-        return render(request, "users_delete.html", {"user": user})
+        return redirect("users")
     
     if request.method == "POST":
         try:
