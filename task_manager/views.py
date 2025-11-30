@@ -52,11 +52,15 @@ def users_delete(request, pk):
     # Если пользователь используется в задаче, сразу редиректим с ошибкой
     try:
         from django.db import transaction
+        # Сохраняем pk перед проверкой
+        user_pk = user.pk
         with transaction.atomic():
             # Пытаемся удалить пользователя в транзакции, чтобы проверить ProtectedError
             user.delete()
             # Если удаление прошло успешно, откатываем транзакцию
             transaction.set_rollback(True)
+        # Получаем пользователя заново после отката транзакции
+        user = get_object_or_404(User, pk=user_pk)
     except ProtectedError:
         messages.error(request, "Невозможно удалить пользователя, потому что он используется")
         return redirect("users")
