@@ -169,6 +169,7 @@ def labels_create(request):
         form = LabelsCreateForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Метка успешно создана')
             return redirect("labels")
     else:
         form = LabelsCreateForm()
