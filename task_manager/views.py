@@ -123,9 +123,13 @@ def tasks_create(request):
     if request.method == "POST":
         form = TasksCreateForm(request.POST)
         if form.is_valid():
-            task = form.save()
+            task = form.save(commit=False)
+            task.author = request.user.profile
+            task.save()
+            form.save_m2m()
             # Сохраняем выбранные метки
             task.labels.set(form.cleaned_data['labels'])
+            messages.success(request, 'Задача успешно создана')
             return redirect("tasks")
     else:
         form = TasksCreateForm()

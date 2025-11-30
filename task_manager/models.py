@@ -20,9 +20,10 @@ class Statuses(models.Model):
 
 class Tasks(models.Model):
     name = models.CharField(max_length=300, verbose_name="Имя")
-    author = models.CharField(max_length=300, verbose_name="Описание") #id?
-    status = models.ForeignKey(Statuses, on_delete=models.PROTECT, related_name='tasks',verbose_name="Статус" )
-    executor = models.ForeignKey(Users, on_delete=models.PROTECT, related_name='executed_tasks', null=True, blank=True, verbose_name="Исполнитель" )
+    description = models.TextField(verbose_name="Описание", blank=True)
+    status = models.ForeignKey(Statuses, on_delete=models.PROTECT, related_name='tasks', verbose_name="Статус")
+    author = models.ForeignKey(Users, on_delete=models.PROTECT, related_name='authored_tasks', null=True, blank=True, verbose_name="Автор")
+    executor = models.ForeignKey(Users, on_delete=models.PROTECT, related_name='executed_tasks', null=True, blank=True, verbose_name="Исполнитель")
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):

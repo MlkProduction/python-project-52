@@ -85,7 +85,7 @@ class TasksCreateForm(forms.ModelForm):
     
     class Meta:
         model = Tasks
-        fields = ("name", "status", "author", "executor")
+        fields = ("name", "description", "status", "executor")
 
 class LabelsCreateForm(forms.ModelForm):
     class Meta:
