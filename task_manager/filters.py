@@ -12,7 +12,8 @@ class TaskFilter(django_filters.FilterSet):
     executor = django_filters.ModelChoiceFilter(
         queryset=User.objects.all(),
         label="Исполнитель",
-        widget=forms.Select(attrs={'class': 'form-select'})
+        widget=forms.Select(attrs={'class': 'form-select'}),
+        to_field_name='id'
     )
     labels = django_filters.ModelChoiceFilter(
         queryset=Labels.objects.all(),
@@ -28,7 +29,10 @@ class TaskFilter(django_filters.FilterSet):
         request = kwargs.pop('request', None)
         super().__init__(*args, **kwargs)
         self.request = request
-        self.fields['executor'].label_from_instance = lambda obj: obj.get_full_name() or obj.username
+        # Устанавливаем label_from_instance после создания формы
+        executor_field = self.form.fields.get('executor')
+        if executor_field:
+            executor_field.label_from_instance = lambda obj: obj.get_full_name() or obj.username
 
     def filter_self_tasks(self, queryset, name, value):
         if value:
