@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView as BaseLoginView, LogoutView as BaseLogoutView
+from django.db.models import ProtectedError
 
 
 def index(request):
@@ -34,16 +35,20 @@ def users_edit(request, pk):
 def users_delete(request, pk):
     user = get_object_or_404(User, pk=pk)
     if request.method == "POST":
-        if user == request.user:
-            user.delete()
-            logout(request)
-            # Очищаем сообщения от logout и отправляем свое
-            list(messages.get_messages(request))
-            messages.success(request, "Пользователь успешно удален")
-        else:
-            user.delete()
-            messages.success(request, "Пользователь успешно удален")
-        return redirect("users")
+        try:
+            if user == request.user:
+                user.delete()
+                logout(request)
+                # Очищаем сообщения от logout и отправляем свое
+                list(messages.get_messages(request))
+                messages.success(request, "Пользователь успешно удален")
+            else:
+                user.delete()
+                messages.success(request, "Пользователь успешно удален")
+            return redirect("users")
+        except ProtectedError:
+            messages.error(request, "Невозможно удалить пользователя, потому что он используется")
+            return redirect("users")
     
     return render(request, "users_delete.html", {"user": user})
 
