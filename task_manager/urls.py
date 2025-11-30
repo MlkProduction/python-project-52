@@ -24,17 +24,13 @@ from task_manager.views import (
     users_create, statuses_delete, statuses_edit, LoginView, LogoutView
 )
 
-
-
-
-
 urlpatterns = [
     path("", index, name="home"),
     path("admin/", admin.site.urls),
     path('users/', users, name='users'),
-    path('users/<int:pk>/update/', users_edit, name='users_edit'), 
-    path('users/<int:pk>/delete/', users_delete, name='users_delete'), 
-    path('users/create/', users_create, name='create'), 
+    path('users/<int:pk>/update/', users_edit, name='users_edit'),
+    path('users/<int:pk>/delete/', users_delete, name='users_delete'),
+    path('users/create/', users_create, name='create'),
     path("login/", LoginView.as_view(), name="login"),
     path("logout/", LogoutView.as_view(), name="logout"),
     path('statuses/', statuses, name='statuses'),
