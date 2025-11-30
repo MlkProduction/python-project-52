@@ -142,6 +142,7 @@ def tasks_delete(request, pk):
     task = get_object_or_404(Tasks, pk=pk)
     if request.method == "POST":
         task.delete()
+        messages.success(request, 'Задача успешно удалена')
         return redirect("tasks")
     
     return render(request, "tasks_delete.html", {"task": task})
