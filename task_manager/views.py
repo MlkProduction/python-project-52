@@ -46,7 +46,7 @@ def users_delete(request, pk):
         if user == request.user:
             logout(request)
             list(messages.get_messages(request))
-        messages.success(request, _("Пользователь успешно удалён"))
+        messages.success(request, "Пользователь успешно удален")
     except ProtectedError:
         messages.error(request, _("Невозможно удалить пользователя, потому что он используется"))
 
