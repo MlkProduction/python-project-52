@@ -154,6 +154,7 @@ def tasks_edit(request, pk):
         if form.is_valid():  
             task = form.save()
             task.labels.set(form.cleaned_data['labels'])
+            messages.success(request, 'Задача успешно изменена')
             return redirect("tasks")
     else:
         form = TasksCreateForm(instance=task)
