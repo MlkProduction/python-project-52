@@ -37,6 +37,8 @@ def users_delete(request, pk):
         if user == request.user:
             user.delete()
             logout(request)
+            # Очищаем сообщения от logout и отправляем свое
+            list(messages.get_messages(request))
             messages.success(request, "Пользователь успешно удален")
         else:
             user.delete()
