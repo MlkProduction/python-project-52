@@ -11,7 +11,8 @@ class TaskFilter(django_filters.FilterSet):
     )
     executor = django_filters.ModelChoiceFilter(
         queryset=User.objects.all(),
-        label="Исполнитель"
+        label="Исполнитель",
+        widget=forms.Select(attrs={'class': 'form-select'})
     )
     labels = django_filters.ModelChoiceFilter(
         queryset=Labels.objects.all(),
@@ -22,6 +23,12 @@ class TaskFilter(django_filters.FilterSet):
         method='filter_self_tasks',
         widget=forms.CheckboxInput
     )
+
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop('request', None)
+        super().__init__(*args, **kwargs)
+        self.request = request
+        self.fields['executor'].label_from_instance = lambda obj: obj.get_full_name() or obj.username
 
     def filter_self_tasks(self, queryset, name, value):
         if value:
