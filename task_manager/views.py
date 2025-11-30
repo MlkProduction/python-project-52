@@ -147,8 +147,15 @@ def tasks_create(request):
     return render(request, "tasks_create.html", {"form": form})
 
 @login_required
+@login_required
 def tasks_delete(request, pk):
     task = get_object_or_404(Tasks, pk=pk)
+    
+    # Проверка прав: задачу может удалить только ее автор
+    if task.author != request.user:
+        messages.error(request, "Задачу может удалить только ее автор")
+        return redirect("tasks")
+    
     if request.method == "POST":
         task.delete()
         messages.success(request, 'Задача успешно удалена')
