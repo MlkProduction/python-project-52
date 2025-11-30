@@ -181,6 +181,7 @@ def labels_delete(request, pk):
     label = get_object_or_404(Labels, pk=pk)
     if request.method == "POST":
         label.delete()
+        messages.success(request, 'Метка успешно удалена')
         return redirect("labels")
     
     return render(request, "labels_delete.html", {"label": label})
