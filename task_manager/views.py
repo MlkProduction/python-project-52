@@ -150,7 +150,7 @@ def tasks_create(request):
 
     return render(request, "tasks_create.html", {"form": form})
 
-@login_required
+
 @login_required
 def tasks_delete(request, pk):
     task = get_object_or_404(Tasks, pk=pk)
@@ -207,9 +207,17 @@ def labels_create(request):
 def labels_delete(request, pk):
     label = get_object_or_404(Labels, pk=pk)
     if request.method == "POST":
-        label.delete()
-        messages.success(request, 'Метка успешно удалена')
-        return redirect("labels")
+        # Проверяем, используется ли метка в задачах
+        if Tasks.objects.filter(labels=label).exists():
+            messages.error(request, "Невозможно удалить метку, потому что она используется")
+            return redirect("labels")
+        try:
+            label.delete()
+            messages.success(request, 'Метка успешно удалена')
+            return redirect("labels")
+        except ProtectedError:
+            messages.error(request, "Невозможно удалить метку, потому что она используется")
+            return redirect("labels")
     
     return render(request, "labels_delete.html", {"label": label})
 

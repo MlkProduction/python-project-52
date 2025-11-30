@@ -1,7 +1,17 @@
 {% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+{% block title %}{% translate "Удалить метку" %}{% endblock %}
+
 {% block content %}
-<form action="{% url 'labels_delete' pk=label.id %}" method="post">
+  <h2 class="mb-4">{% translate "Удалить метку" %}</h2>
+  <p>{% translate "Вы уверены, что хотите удалить метку" %} "{{ label.name }}"?</p>
+  <form action="{% url 'labels_delete' pk=label.id %}" method="post">
     {% csrf_token %}
-    <input type="submit" value="Да, удалить">
-</form>
+    <input type="submit" value="{% translate 'Да, удалить' %}" class="btn btn-danger">
+  </form>
 {% endblock %}
+
+
+
