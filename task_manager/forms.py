@@ -76,12 +76,6 @@ class StatusesCreateForm(forms.ModelForm):
         fields = ("name",)
 
 class TasksCreateForm(forms.ModelForm):
-    executor = forms.ModelChoiceField(
-        queryset=Users.objects.all(),
-        required=False,
-        widget=forms.Select(attrs={'class': 'form-select'}),
-        label="Исполнитель"
-    )
     labels = forms.ModelMultipleChoiceField(
         queryset=Labels.objects.all(),
         required=False,
