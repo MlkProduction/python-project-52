@@ -7,7 +7,9 @@ from task_manager.models import Labels, Statuses, Tasks
 class RegistrationForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True, label="Имя")
     last_name = forms.CharField(max_length=30, required=True, label="Фамилия")
-    username = forms.CharField(max_length=150, required=True, label="Имя пользователя")
+    username = forms.CharField(
+        max_length=150, required=True, label="Имя пользователя"
+    )
     password1 = forms.CharField(
         widget=forms.PasswordInput,
         label="Пароль"
@@ -19,7 +21,10 @@ class RegistrationForm(UserCreationForm):
     
     class Meta:
         model = User
-        fields = ("first_name", "last_name", "username", "password1", "password2")
+        fields = (
+            "first_name", "last_name", "username",
+            "password1", "password2"
+        )
     
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -33,7 +38,9 @@ class RegistrationForm(UserCreationForm):
 class UserUpdateForm(forms.ModelForm):
     first_name = forms.CharField(max_length=30, required=True, label="Имя")
     last_name = forms.CharField(max_length=30, required=True, label="Фамилия")
-    username = forms.CharField(max_length=150, required=True, label="Имя пользователя")
+    username = forms.CharField(
+        max_length=150, required=True, label="Имя пользователя"
+    )
     password1 = forms.CharField(
         widget=forms.PasswordInput,
         required=False,
@@ -68,10 +75,12 @@ class UserUpdateForm(forms.ModelForm):
             user.save()
         return user
 
+
 class StatusesCreateForm(forms.ModelForm):
     class Meta:
         model = Statuses
         fields = ("name",)
+
 
 class TasksCreateForm(forms.ModelForm):
     executor = forms.ModelChoiceField(
@@ -84,7 +93,10 @@ class TasksCreateForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['executor'].label_from_instance = lambda obj: obj.get_full_name() or obj.username
+        executor_field = self.fields['executor']
+        executor_field.label_from_instance = (
+            lambda obj: obj.get_full_name() or obj.username
+        )
     labels = forms.ModelMultipleChoiceField(
         queryset=Labels.objects.all(),
         required=False,
@@ -92,10 +104,10 @@ class TasksCreateForm(forms.ModelForm):
         label="Метки"
     )
 
-    
     class Meta:
         model = Tasks
         fields = ("name", "description", "status", "executor")
+
 
 class LabelsCreateForm(forms.ModelForm):
     class Meta:

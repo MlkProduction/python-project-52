@@ -32,7 +32,9 @@ class TaskFilter(django_filters.FilterSet):
         # Устанавливаем label_from_instance после создания формы
         executor_field = self.form.fields.get('executor')
         if executor_field:
-            executor_field.label_from_instance = lambda obj: obj.get_full_name() or obj.username
+            executor_field.label_from_instance = (
+                lambda obj: obj.get_full_name() or obj.username
+            )
 
     def filter_self_tasks(self, queryset, name, value):
         if value:
