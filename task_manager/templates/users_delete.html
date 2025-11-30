@@ -2,10 +2,10 @@
 {% load django_bootstrap5 %}
 {% load i18n %}
 
-{% block title %}{% translate "Удалить пользователя" %}{% endblock %}
+{% block title %}{% translate "Удаление пользователя" %}{% endblock %}
 
 {% block content %}
-  <h2 class="mb-4">{% translate "Удалить пользователя" %}</h2>
+  <h2 class="mb-4">{% translate "Удаление пользователя" %}</h2>
   <p>{% translate "Вы уверены, что хотите удалить пользователя" %} "{{ user.username }}"?</p>
   <form action="{% url 'users_delete' pk=user.id %}" method="post">
     {% csrf_token %}
