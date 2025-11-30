@@ -53,8 +53,8 @@
         <td>{{ task.id }}</td>
         <td>{{ task.name }}</td>
         <td>{% if task.status %}{{ task.status.name}}{% else %}-{% endif %}</td>
-        <td>{% if task.author %}{{ task.author.fullname }}{% else %}-{% endif %}</td>
-        <td>{% if task.executor %}{{ task.executor.fullname }}{% else %}-{% endif %}</td>
+        <td>{% if task.author %}{{ task.author.get_full_name|default:task.author.username }}{% else %}-{% endif %}</td>
+        <td>{% if task.executor %}{{ task.executor.get_full_name|default:task.executor.username }}{% else %}-{% endif %}</td>
         <td>{{ task.created_at }}</td>
         <td>
           <a class="btn btn-sm btn-outline-primary"

@@ -1,5 +1,6 @@
 import django_filters
-from task_manager.models import Tasks, Statuses, Users, Labels
+from task_manager.models import Tasks, Statuses, Labels
+from django.contrib.auth.models import User
 
 
 class TaskFilter(django_filters.FilterSet):
@@ -8,7 +9,7 @@ class TaskFilter(django_filters.FilterSet):
         label="Статус"
     )
     executor = django_filters.ModelChoiceFilter(
-        queryset=Users.objects.all(),
+        queryset=User.objects.all(),
         label="Исполнитель"
     )
     labels = django_filters.ModelChoiceFilter(

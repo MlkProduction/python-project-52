@@ -22,8 +22,8 @@
       <tr>
         <td>{{ user.id }}</td>
         <td>{{ user.username }}</td>
-        <td>{{ user.fullname }}</td>
-        <td>{{ user.created_at }}</td>
+        <td>{{ user.get_full_name|default:user.username }}</td>
+        <td>{{ user.date_joined }}</td>
         <td>
           <a class="btn btn-sm btn-outline-primary"
              href="{% url 'users_edit' pk=user.id %}">

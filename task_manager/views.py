@@ -1,10 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from task_manager.models import Labels, Statuses, Tasks, Users
+from task_manager.models import Labels, Statuses, Tasks
 from task_manager.forms import LabelsCreateForm, RegistrationForm, TasksCreateForm, UserUpdateForm, StatusesCreateForm
 from task_manager.filters import TaskFilter
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import logout
+from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView as BaseLoginView, LogoutView as BaseLogoutView
 
 
@@ -12,12 +13,12 @@ def index(request):
     return render(request, "index.html", {"who": "World"})
 
 def users(request):
-    users = Users.objects.all()
+    users = User.objects.all()
     return render(request, "users.html", {"users": users})
     
 @login_required
 def users_edit(request, pk):
-    user = get_object_or_404(Users, pk=pk)
+    user = get_object_or_404(User, pk=pk)
     if request.method == "POST":
         form = UserUpdateForm(request.POST, instance=user)
         if form.is_valid():
@@ -31,9 +32,9 @@ def users_edit(request, pk):
 
 @login_required
 def users_delete(request, pk):
-    user = get_object_or_404(Users, pk=pk)
+    user = get_object_or_404(User, pk=pk)
     if request.method == "POST":
-        if user.user and user.user == request.user:
+        if user == request.user:
             user.delete()
             logout(request)
             list(messages.get_messages(request)) 
@@ -112,9 +113,7 @@ def tasks(request):
     filtered_tasks = task_filter.qs
      
     if request.GET.get('self_tasks') == 'on':
-        user_profile = Users.objects.filter(user=request.user).first()
-        if user_profile:
-            filtered_tasks = filtered_tasks.filter(author=user_profile)
+        filtered_tasks = filtered_tasks.filter(author=request.user)
     
     return render(request, "tasks.html", {"tasks": filtered_tasks, "filter": task_filter})
 
@@ -124,7 +123,7 @@ def tasks_create(request):
         form = TasksCreateForm(request.POST)
         if form.is_valid():
             task = form.save(commit=False)
-            task.author = request.user.profile
+            task.author = request.user
             task.save()
             form.save_m2m()
             # Сохраняем выбранные метки

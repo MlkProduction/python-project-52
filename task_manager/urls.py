@@ -18,7 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.shortcuts import render
 from django.urls import path
-from task_manager.models import Labels, Users
+from task_manager.models import Labels
 from task_manager.views import index, labels, statuses_create, labels_create, labels_edit, labels_delete, tasks, tasks_create, statuses, tasks_delete, tasks_edit, users, users_edit, users_delete, users_create, statuses_delete, statuses_edit, LoginView, LogoutView
 from django.contrib.auth import views as auth_views
 
