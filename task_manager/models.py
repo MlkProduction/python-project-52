@@ -1,16 +1,7 @@
 from django.db import models
-from django.utils import timezone
 from django.contrib.auth.models import User
+from django.utils import timezone
 
-
-class Users(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile', null=True, blank=True)
-    username = models.CharField(max_length=300)
-    fullname = models.CharField(max_length=300)
-    created_at = models.DateTimeField(default=timezone.now)
-
-    def __str__(self):
-        return self.username
 
 class Statuses(models.Model):
     name = models.CharField(max_length=300, verbose_name="Имя")
@@ -18,12 +9,30 @@ class Statuses(models.Model):
     def __str__(self):
         return self.name
 
+
 class Tasks(models.Model):
     name = models.CharField(max_length=300, verbose_name="Имя")
     description = models.TextField(verbose_name="Описание", blank=True)
-    status = models.ForeignKey(Statuses, on_delete=models.PROTECT, related_name='tasks', verbose_name="Статус")
-    author = models.ForeignKey(Users, on_delete=models.PROTECT, related_name='authored_tasks', null=True, blank=True, verbose_name="Автор")
-    executor = models.ForeignKey(Users, on_delete=models.PROTECT, related_name='executed_tasks', null=True, blank=True, verbose_name="Исполнитель")
+    status = models.ForeignKey(
+        Statuses,
+        on_delete=models.PROTECT,
+        related_name='tasks',
+        verbose_name="Статус",
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        related_name='authored_tasks',
+        verbose_name="Автор"
+    )
+    executor = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        related_name='executed_tasks',
+        verbose_name="Исполнитель",
+        null=True,
+        blank=True
+    )
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
@@ -32,12 +41,12 @@ class Tasks(models.Model):
 
 class Labels(models.Model):
     name = models.CharField(max_length=300, verbose_name="Имя")
-    tasks = models.ManyToManyField(Tasks, related_name='labels', blank=True)
+    tasks = models.ManyToManyField(
+        Tasks,
+        related_name='labels',
+        blank=True
+    )
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.name
-
-    
-
-        
