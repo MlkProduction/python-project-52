@@ -150,6 +150,7 @@ def tasks(request):
         {"tasks": filtered_tasks, "filter": task_filter}
     )
 
+
 @login_required
 def tasks_detail(request, pk):
     task = get_object_or_404(Tasks, pk=pk)
@@ -251,6 +252,7 @@ def labels_delete(request, pk):
     
     return render(request, "labels_delete.html", {"label": label})
 
+
 @login_required
 def labels_edit(request, pk):
     label = get_object_or_404(Labels, pk=pk)
@@ -263,7 +265,11 @@ def labels_edit(request, pk):
     else:
         form = LabelsCreateForm(instance=label)
 
-    return render(request, "labels_updating.html", {"form": form, "label": label})
+    return render(
+        request,
+        "labels_updating.html",
+        {"form": form, "label": label}
+    )
 
 
 class LoginView(BaseLoginView):

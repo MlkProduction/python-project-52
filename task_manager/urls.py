@@ -49,5 +49,5 @@ urlpatterns = [
     path('labels/', labels, name='labels'),
     path('labels/create/', labels_create, name='labels_create'),
     path('labels/<int:pk>/update/', labels_edit, name='labels_edit'),
-    path('labels/<int:pk>/delete/', labels_delete, name='labels_delete'),  
+    path('labels/<int:pk>/delete/', labels_delete, name='labels_delete'),
 ]
