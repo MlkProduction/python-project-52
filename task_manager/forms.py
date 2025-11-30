@@ -82,6 +82,12 @@ class TasksCreateForm(forms.ModelForm):
         widget=forms.SelectMultiple(attrs={'size': '5'}),
         label="Метки"
     )
+    executor = forms.ModelChoiceField(
+        queryset=Users.objects.all(),
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-select'}),
+        label="Исполнитель"
+    )
     
     class Meta:
         model = Tasks
