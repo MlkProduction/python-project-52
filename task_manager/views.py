@@ -35,15 +35,20 @@ def users_edit(request, pk):
 @login_required
 def users_delete(request, pk):
     user = get_object_or_404(User, pk=pk)
-    try:
-        user.delete()
-        if user == request.user:
-            logout(request)
-            list(messages.get_messages(request))
-        messages.success(request, "Пользователь успешно удален")
-    except ProtectedError:
-        messages.error(request, "Невозможно удалить пользователя, потому что он используется")
-    return redirect("users")
+    if request.method == "POST":
+        try:
+            user.delete()
+            if user == request.user:
+                logout(request)
+                # Очищаем сообщения от logout и отправляем свое
+                list(messages.get_messages(request))
+            messages.success(request, "Пользователь успешно удален")
+            return redirect("users")
+        except ProtectedError:
+            messages.error(request, "Невозможно удалить пользователя, потому что он используется")
+            return redirect("users")
+    
+    return render(request, "users_delete.html", {"user": user})
 
 
 def users_create(request):
