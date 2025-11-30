@@ -12,13 +12,7 @@
       {% bootstrap_field form.name layout='vertical' %}
       {% bootstrap_field form.description layout='vertical' %}
       {% bootstrap_field form.status layout='vertical' %}
-      <div class="mb-3">
-        <label class="form-label" for="{{ form.executor.id_for_label }}">Исполнитель</label>
-        {{ form.executor }}
-        {% if form.executor.errors %}
-          <div class="text-danger">{{ form.executor.errors }}</div>
-        {% endif %}
-      </div>
+      {% bootstrap_field form.executor layout='vertical' %}
       {% bootstrap_field form.labels layout='vertical' %}
 
       <button type="submit" class="btn btn-primary">{% translate "Создать" %}</button>

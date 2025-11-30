@@ -78,8 +78,13 @@ class TasksCreateForm(forms.ModelForm):
         queryset=User.objects.all(),
         required=False,
         widget=forms.Select(attrs={'class': 'form-select'}),
-        label="Исполнитель"
+        label="Исполнитель",
+        empty_label="---------"
     )
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['executor'].label_from_instance = lambda obj: obj.get_full_name() or obj.username
     labels = forms.ModelMultipleChoiceField(
         queryset=Labels.objects.all(),
         required=False,
