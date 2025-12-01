@@ -21,8 +21,8 @@ def index(request):
 
 
 def users(request):
-    users = User.objects.all()
-    return render(request, "users.html", {"users": users})
+    users_list = User.objects.all()
+    return render(request, "users.html", {"users": users_list})
 
 
 @login_required
@@ -53,7 +53,7 @@ def users_delete(request, pk):
         try:
             user.delete()
             logout(request)
-            list(messages.get_messages(request))
+            _ = list(messages.get_messages(request))  # NOSONAR
             messages.success(request, "Пользователь успешно удален")
             return redirect("users")
         except ProtectedError:
@@ -118,7 +118,7 @@ def statuses_edit(request, pk):
     status = get_object_or_404(Statuses, pk=pk)
     if request.method == "POST":
         form = StatusesCreateForm(request.POST, instance=status)
-        if form.is_valid():  
+        if form.is_valid():
             form.save()
             messages.success(request, 'Статус успешно изменен')
             return redirect("statuses") 
@@ -161,7 +161,6 @@ def tasks_create(request):
             task.author = request.user
             task.save()
             form.save_m2m()
-            task.labels.set(form.cleaned_data['labels'])
             messages.success(request, 'Задача успешно создана')
             return redirect("tasks")
     else:
@@ -191,9 +190,8 @@ def tasks_edit(request, pk):
     task = get_object_or_404(Tasks, pk=pk)
     if request.method == "POST":
         form = TasksCreateForm(request.POST, instance=task)
-        if form.is_valid():  
-            task = form.save()
-            task.labels.set(form.cleaned_data['labels'])
+        if form.is_valid():
+            form.save()
             messages.success(request, 'Задача успешно изменена')
             return redirect("tasks")
     else:
@@ -248,7 +246,7 @@ def labels_edit(request, pk):
     label = get_object_or_404(Labels, pk=pk)
     if request.method == "POST":
         form = LabelsCreateForm(request.POST, instance=label)
-        if form.is_valid():  
+        if form.is_valid():
             form.save()
             messages.success(request, 'Метка успешно изменена')
             return redirect("labels")

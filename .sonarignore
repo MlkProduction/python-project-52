@@ -1,0 +1,7 @@
+**/migrations/**
+**/staticfiles/**
+**/__pycache__/**
+**/venv/**
+**/.venv/**
+**/*.pyc
+

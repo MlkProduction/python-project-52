@@ -2,7 +2,7 @@
 set -euo pipefail
 
 curl -LsSf https://astral.sh/uv/install.sh | sh
-if [ -f "$HOME/.local/bin/env" ]; then
+if [[ -f "$HOME/.local/bin/env" ]]; then
   # shellcheck source=/dev/null
   source "$HOME/.local/bin/env"
 else
