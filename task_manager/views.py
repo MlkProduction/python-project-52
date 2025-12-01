@@ -161,6 +161,7 @@ def tasks_create(request):
             task.author = request.user
             task.save()
             form.save_m2m()
+            task.labels.set(form.cleaned_data['labels'])
             messages.success(request, 'Задача успешно создана')
             return redirect("tasks")
     else:
@@ -191,7 +192,8 @@ def tasks_edit(request, pk):
     if request.method == "POST":
         form = TasksCreateForm(request.POST, instance=task)
         if form.is_valid():
-            form.save()
+            task = form.save()
+            task.labels.set(form.cleaned_data['labels'])
             messages.success(request, 'Задача успешно изменена')
             return redirect("tasks")
     else:
