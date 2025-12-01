@@ -1,29 +1,3 @@
-# -----------------------
-# Docker / Compose helpers
-# -----------------------
-compose-setup: compose-build compose-install
-
-compose-build:
-	docker compose build
-
-compose-install:
-	docker compose run app make install
-
-compose-bash:
-	docker compose run app bash
-
-compose:
-	docker compose up
-
-compose-lint:
-	docker compose run app make lint
-
-compose-test:
-	docker compose run app make test
-
-# -----------------------
-# Project commands
-# -----------------------
 install:
 	uv sync
 
