@@ -44,7 +44,6 @@ def users_edit(request, pk):
 def users_delete(request, pk):
     user = get_object_or_404(User, pk=pk)
     
-    # Проверка прав: можно удалять только себя
     if user != request.user:
         msg = "У вас нет прав для изменения другого пользователя."
         messages.error(request, msg)
@@ -54,7 +53,6 @@ def users_delete(request, pk):
         try:
             user.delete()
             logout(request)
-            # Очищаем сообщения от logout и отправляем свое
             list(messages.get_messages(request))
             messages.success(request, "Пользователь успешно удален")
             return redirect("users")
@@ -79,7 +77,6 @@ def users_create(request):
     return render(request, "register.html", {"form": form})
 
 
-# СТАТУСЫ
 @login_required
 def statuses(request):
     statuses_list = Statuses.objects.all()
@@ -135,8 +132,6 @@ def statuses_edit(request, pk):
     )
 
 
-# ТАСКИ
-
 @login_required
 def tasks(request):
     tasks_list = Tasks.objects.all()
@@ -166,7 +161,6 @@ def tasks_create(request):
             task.author = request.user
             task.save()
             form.save_m2m()
-            # Сохраняем выбранные метки
             task.labels.set(form.cleaned_data['labels'])
             messages.success(request, 'Задача успешно создана')
             return redirect("tasks")
@@ -180,7 +174,6 @@ def tasks_create(request):
 def tasks_delete(request, pk):
     task = get_object_or_404(Tasks, pk=pk)
     
-    # Проверка прав: задачу может удалить только ее автор
     if task.author != request.user:
         messages.error(request, "Задачу может удалить только ее автор")
         return redirect("tasks")
@@ -209,8 +202,6 @@ def tasks_edit(request, pk):
 
     return render(request, "tasks_updating.html", {"form": form, "task": task})
 
-#   ЛЕЙБЛЫ
-
 
 @login_required
 def labels(request):
@@ -236,7 +227,6 @@ def labels_create(request):
 def labels_delete(request, pk):
     label = get_object_or_404(Labels, pk=pk)
     if request.method == "POST":
-        # Проверяем, используется ли метка в задачах
         if Tasks.objects.filter(labels=label).exists():
             msg = "Невозможно удалить метку, потому что она используется"
             messages.error(request, msg)

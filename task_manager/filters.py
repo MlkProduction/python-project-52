@@ -29,7 +29,6 @@ class TaskFilter(django_filters.FilterSet):
         request = kwargs.pop('request', None)
         super().__init__(*args, **kwargs)
         self.request = request
-        # Устанавливаем label_from_instance после создания формы
         executor_field = self.form.fields.get('executor')
         if executor_field:
             executor_field.label_from_instance = (
