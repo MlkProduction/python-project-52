@@ -16,7 +16,7 @@
     </div>
   {% endif %}
 
-  <form action="{% url 'labels:labels:labels_edit' pk=label.id %}" method="post">
+  <form action="{% url 'labels:labels_edit' pk=label.id %}" method="post">
     {% csrf_token %}
     {% bootstrap_form form layout='vertical' %}
     <button type="submit" class="btn btn-primary">{% translate 'Изменить' %}</button>

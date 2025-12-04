@@ -6,7 +6,7 @@
 
 {% block content %}
   <h2 class="mb-4">{% translate "Метки" %}</h2>
-  <a href="{% url 'labels:labels:labels_create' %}" class="btn btn-success mb-3">{% translate "Создать метку" %}</a>
+  <a href="{% url 'labels:labels_create' %}" class="btn btn-success mb-3">{% translate "Создать метку" %}</a>
   <table class="table mt-3 table-bordered table-striped table-hover">
     <thead class="table-dark">
       <tr>
@@ -24,11 +24,11 @@
         <td>{{ label.created_at }}</td>
         <td>
           <a class="btn btn-sm btn-outline-primary"
-             href="{% url 'labels:labels:labels_edit' pk=label.id %}">
+             href="{% url 'labels:labels_edit' pk=label.id %}">
             {% translate "Изменить" %}
           </a>
           <a class="btn btn-sm btn-outline-danger"
-             href="{% url 'labels:labels:labels_delete' pk=label.id %}">
+             href="{% url 'labels:labels_delete' pk=label.id %}">
             {% translate "Удалить" %}
           </a>
         </td>

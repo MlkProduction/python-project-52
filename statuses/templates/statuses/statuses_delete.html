@@ -7,7 +7,7 @@
 {% block content %}
   <h2 class="mb-4">{% translate "Удалить статус" %}</h2>
   <p>{% translate "Вы уверены, что хотите удалить статус" %} "{{ status.name }}"?</p>
-  <form action="{% url 'statuses:statuses:statuses_delete' pk=status.id %}" method="post">
+  <form action="{% url 'statuses:statuses_delete' pk=status.id %}" method="post">
     {% csrf_token %}
     <input type="submit" value="{% translate 'Да, удалить' %}" class="btn btn-danger">
   </form>

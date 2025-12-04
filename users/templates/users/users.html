@@ -26,11 +26,11 @@
         <td>{{ user.date_joined }}</td>
         <td>
           <a class="btn btn-sm btn-outline-primary"
-             href="{% url 'users:users:users_edit' pk=user.id %}">
+             href="{% url 'users:users_edit' pk=user.id %}">
             {% translate "Изменить" %}
           </a>
           <a class="btn btn-sm btn-outline-danger"
-             href="{% url 'users:users:users_delete' pk=user.id %}">
+             href="{% url 'users:users_delete' pk=user.id %}">
             {% translate "Удалить" %}
           </a>
         </td>

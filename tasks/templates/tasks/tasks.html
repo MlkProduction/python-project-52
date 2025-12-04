@@ -33,7 +33,7 @@
     </div>
   </div>
   
-  <a href="{% url 'tasks:tasks:tasks_create' %}" class="btn btn-success mb-3">{% translate "Создать задачу" %}</a>
+  <a href="{% url 'tasks:tasks_create' %}" class="btn btn-success mb-3">{% translate "Создать задачу" %}</a>
   
   <table class="table mt-3 table-bordered table-striped table-hover">
     <thead class="table-dark">
@@ -51,18 +51,18 @@
       {% for task in tasks %}
       <tr>
         <td>{{ task.id }}</td>
-        <td><a href="{% url 'tasks:tasks:tasks_detail' pk=task.id %}">{{ task.name }}</a></td>
+        <td><a href="{% url 'tasks:tasks_detail' pk=task.id %}">{{ task.name }}</a></td>
         <td>{% if task.status %}{{ task.status.name}}{% else %}-{% endif %}</td>
         <td>{% if task.author %}{{ task.author.get_full_name|default:task.author.username }}{% else %}-{% endif %}</td>
         <td>{% if task.executor %}{{ task.executor.get_full_name|default:task.executor.username }}{% else %}-{% endif %}</td>
         <td>{{ task.created_at }}</td>
         <td>
           <a class="btn btn-sm btn-outline-primary"
-             href="{% url 'tasks:tasks:tasks_edit' pk=task.id %}">
+             href="{% url 'tasks:tasks_edit' pk=task.id %}">
             {% translate "Изменить" %}
           </a>
           <a class="btn btn-sm btn-outline-danger"
-             href="{% url 'tasks:tasks:tasks_delete' pk=task.id %}">
+             href="{% url 'tasks:tasks_delete' pk=task.id %}">
             {% translate "Удалить" %}
           </a>
         </td>

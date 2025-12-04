@@ -16,7 +16,7 @@
     </div>
   {% endif %}
 
-  <form action="{% url 'users:users:users_edit' pk=user.id %}" method="post">
+  <form action="{% url 'users:users_edit' pk=user.id %}" method="post">
     {% csrf_token %}
     {% bootstrap_form form layout='vertical' %}
     <button type="submit" class="btn btn-primary">{% translate 'Изменить' %}</button>

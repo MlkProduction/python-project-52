@@ -7,7 +7,7 @@
 {% block content %}
   <h2 class="mb-4">{% translate "Удалить задачу" %}</h2>
   <p>{% translate "Вы уверены, что хотите удалить задачу" %} "{{ task.name }}"?</p>
-  <form action="{% url 'tasks:tasks:tasks_delete' pk=task.id %}" method="post">
+  <form action="{% url 'tasks:tasks_delete' pk=task.id %}" method="post">
     {% csrf_token %}
     <input type="submit" value="{% translate 'Да, удалить' %}" class="btn btn-danger">
   </form>

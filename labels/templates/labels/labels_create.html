@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<form action="{% url 'labels:labels:labels_create' %}" method="post">
+<form action="{% url 'labels:labels_create' %}" method="post">
     {% csrf_token %}
     {% bootstrap_form form layout='vertical' %}
 

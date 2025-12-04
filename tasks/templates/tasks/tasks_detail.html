@@ -46,8 +46,8 @@
       {% endif %}
       
       <div class="mt-3">
-        <a href="{% url 'tasks:tasks:tasks_edit' pk=task.id %}" class="btn btn-primary">{% translate "Изменить" %}</a>
-        <a href="{% url 'tasks:tasks:tasks_delete' pk=task.id %}" class="btn btn-danger">{% translate "Удалить" %}</a>
+        <a href="{% url 'tasks:tasks_edit' pk=task.id %}" class="btn btn-primary">{% translate "Изменить" %}</a>
+        <a href="{% url 'tasks:tasks_delete' pk=task.id %}" class="btn btn-danger">{% translate "Удалить" %}</a>
       </div>
     </div>
   </div>
