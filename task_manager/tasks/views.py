@@ -50,12 +50,12 @@ def tasks_delete(request, pk):
     
     if task.author != request.user:
         messages.error(request, "Задачу может удалить только ее автор")
-        return redirect("tasks")
+        return redirect("tasks:tasks")
     
     if request.method == "POST":
         task.delete()
         messages.success(request, 'Задача успешно удалена')
-        return redirect("tasks")
+        return redirect("tasks:tasks")
     
     return render(request, "tasks/tasks_delete.html", {"task": task})
 
