@@ -1,9 +1,7 @@
-from django.shortcuts import render
 from django.contrib import messages
-from django.contrib.auth.views import (
-    LoginView as BaseLoginView,
-    LogoutView as BaseLogoutView
-)
+from django.contrib.auth.views import LoginView as BaseLoginView
+from django.contrib.auth.views import LogoutView as BaseLogoutView
+from django.shortcuts import render
 
 
 def index(request):

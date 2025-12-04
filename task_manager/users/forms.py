@@ -1,6 +1,6 @@
+from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django import forms
 
 
 class RegistrationForm(UserCreationForm):
@@ -17,14 +17,14 @@ class RegistrationForm(UserCreationForm):
         widget=forms.PasswordInput,
         label="Подтверждение пароля"
     )
-    
+
     class Meta:
         model = User
         fields = (
             "first_name", "last_name", "username",
             "password1", "password2"
         )
-    
+
     def save(self, commit=True):
         user = super().save(commit=False)
         user.first_name = self.cleaned_data["first_name"]
@@ -50,11 +50,11 @@ class UserUpdateForm(forms.ModelForm):
         required=False,
         label="Подтверждение пароля"
     )
-    
+
     class Meta:
         model = User
         fields = ("username", "first_name", "last_name")
-    
+
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
@@ -62,7 +62,7 @@ class UserUpdateForm(forms.ModelForm):
             if password1 != password2:
                 raise forms.ValidationError("Пароли не совпадают")
         return password2
-    
+
     def save(self, commit=True):
         user = super().save(commit=False)
         user.first_name = self.cleaned_data['first_name']

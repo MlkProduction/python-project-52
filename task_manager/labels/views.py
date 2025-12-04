@@ -1,9 +1,10 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.db.models import ProtectedError
-from task_manager.labels.models import Label
+from django.shortcuts import get_object_or_404, redirect, render
+
 from task_manager.labels.forms import LabelForm
+from task_manager.labels.models import Label
 from task_manager.tasks.models import Task
 
 
@@ -43,7 +44,7 @@ def labels_delete(request, pk):
             msg = "Невозможно удалить метку, потому что она используется"
             messages.error(request, msg)
             return redirect("labels:labels")
-    
+
     return render(request, "labels/labels_delete.html", {"label": label})
 
 

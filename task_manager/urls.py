@@ -1,6 +1,7 @@
 from django.contrib import admin
-from django.urls import path, include
-from task_manager.views import index, LoginView, LogoutView
+from django.urls import include, path
+
+from task_manager.views import LoginView, LogoutView, index
 
 urlpatterns = [
     path("", index, name="home"),

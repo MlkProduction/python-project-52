@@ -1,18 +1,19 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from task_manager.tasks.models import Task
-from task_manager.tasks.forms import TaskForm
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect, render
+
 from task_manager.tasks.filters import TaskFilter
+from task_manager.tasks.forms import TaskForm
+from task_manager.tasks.models import Task
 
 
 @login_required
 def tasks_list(request):
     tasks_list = Task.objects.all()
-    
+
     task_filter = TaskFilter(request.GET, queryset=tasks_list, request=request)
     filtered_tasks = task_filter.qs
-    
+
     return render(
         request,
         "tasks/tasks.html",
@@ -47,16 +48,16 @@ def tasks_create(request):
 @login_required
 def tasks_delete(request, pk):
     task = get_object_or_404(Task, pk=pk)
-    
+
     if task.author != request.user:
         messages.error(request, "Задачу может удалить только ее автор")
         return redirect("tasks:tasks")
-    
+
     if request.method == "POST":
         task.delete()
         messages.success(request, 'Задача успешно удалена')
         return redirect("tasks:tasks")
-    
+
     return render(request, "tasks/tasks_delete.html", {"task": task})
 
 
@@ -74,4 +75,6 @@ def tasks_edit(request, pk):
         form = TaskForm(instance=task)
         form.fields['labels'].initial = task.labels.all()
 
-    return render(request, "tasks/tasks_updating.html", {"form": form, "task": task})
+    return render(
+        request, "tasks/tasks_updating.html", {"form": form, "task": task}
+    )
