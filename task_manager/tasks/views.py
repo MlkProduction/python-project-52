@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from tasks.models import Task
-from tasks.forms import TaskForm
-from tasks.filters import TaskFilter
+from task_manager.tasks.models import Task
+from task_manager.tasks.forms import TaskForm
+from task_manager.tasks.filters import TaskFilter
 
 
 @login_required

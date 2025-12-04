@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.db.models import ProtectedError
-from users.forms import RegistrationForm, UserUpdateForm
+from task_manager.users.forms import RegistrationForm, UserUpdateForm
 
 
 def users_list(request):
