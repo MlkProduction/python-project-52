@@ -5,7 +5,7 @@
 
 ## Локальный запуск
 
-1. Установите зависимости (используется [uv](https://github.com/astral-sh/uv)):
+1. Установите зависимости uv
    ```
    uv sync
    ```
@@ -15,7 +15,7 @@
    ```
 3. Запустите dev-сервер Django:
    ```
-   python hexlet-code/manage.py runserver
+   python manage.py runserver
    ```
 4. Откройте `http://127.0.0.1:8000/`
 
