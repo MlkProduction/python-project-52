@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.db.models import ProtectedError
+from django.urls import reverse
 from task_manager.users.forms import RegistrationForm, UserUpdateForm
 
 
@@ -34,7 +35,7 @@ def users_delete(request, pk):
     if user != request.user:
         msg = "У вас нет прав для изменения другого пользователя."
         messages.error(request, msg)
-        return redirect("users")
+        return redirect("users:users")
     
     if request.method == "POST":
         try:
@@ -42,11 +43,11 @@ def users_delete(request, pk):
             logout(request)
             _ = list(messages.get_messages(request))  # NOSONAR
             messages.success(request, "Пользователь успешно удален")
-            return redirect("users:users")
+            return redirect(reverse("users:users"))
         except ProtectedError:
             msg = "Невозможно удалить пользователя, потому что он используется"
             messages.error(request, msg)
-            return redirect("users:users")
+            return redirect(reverse("users:users"))
     
     return render(request, "users/users_delete.html", {"user": user})
 
