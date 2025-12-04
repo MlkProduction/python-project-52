@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+
+<form action="{% url 'labels:labels:labels_create' %}" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form layout='vertical' %}
+
+    {% bootstrap_button "Создать" button_type="submit" button_class="btn-primary w-25" %}
+</form>
+{% endblock %}

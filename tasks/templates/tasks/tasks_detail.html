@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+{% block title %}{% translate "Просмотр задачи" %}{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-header bg-dark text-white">
+      <h4 class="mb-0">{{ task.name }}</h4>
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{ task.description|default:"—" }}</p>
+      
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <strong>{% translate "Автор" %}:</strong> 
+          {% if task.author %}{{ task.author.get_full_name|default:task.author.username }}{% else %}-{% endif %}
+        </div>
+        <div class="col-md-6">
+          <strong>{% translate "Исполнитель" %}:</strong> 
+          {% if task.executor %}{{ task.executor.get_full_name|default:task.executor.username }}{% else %}-{% endif %}
+        </div>
+      </div>
+      
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <strong>{% translate "Статус" %}:</strong> 
+          {% if task.status %}{{ task.status.name }}{% else %}-{% endif %}
+        </div>
+        <div class="col-md-6">
+          <strong>{% translate "Дата создания" %}:</strong> 
+          {{ task.created_at|date:"d.m.Y H:i" }}
+        </div>
+      </div>
+      
+      {% if task.labels.all %}
+        <div class="mb-3">
+          <strong>{% translate "Метки" %}:</strong>
+          <ul class="list-unstyled mb-0">
+            {% for label in task.labels.all %}
+              <li>• {{ label.name }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+      
+      <div class="mt-3">
+        <a href="{% url 'tasks:tasks:tasks_edit' pk=task.id %}" class="btn btn-primary">{% translate "Изменить" %}</a>
+        <a href="{% url 'tasks:tasks:tasks_delete' pk=task.id %}" class="btn btn-danger">{% translate "Удалить" %}</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

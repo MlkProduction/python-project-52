@@ -17,7 +17,7 @@
           <div class="card-body">
             <h5 class="card-title">📋 {% translate "Задачи" %}</h5>
             <p class="card-text">
-              <a href="{% url 'tasks' %}" class="btn btn-primary w-100">{% translate "Управление" %}</a>
+              <a href="{% url 'tasks:tasks' %}" class="btn btn-primary w-100">{% translate "Управление" %}</a>
             </p>
           </div>
         </div>
@@ -27,7 +27,7 @@
           <div class="card-body">
             <h5 class="card-title">🏷️ {% translate "Статусы" %}</h5>
             <p class="card-text">
-              <a href="{% url 'statuses' %}" class="btn btn-success w-100">{% translate "Управление" %}</a>
+              <a href="{% url 'statuses:statuses' %}" class="btn btn-success w-100">{% translate "Управление" %}</a>
             </p>
           </div>
         </div>
@@ -37,7 +37,7 @@
           <div class="card-body">
             <h5 class="card-title">🏷️ {% translate "Метки" %}</h5>
             <p class="card-text">
-              <a href="{% url 'labels' %}" class="btn btn-info w-100">{% translate "Управление" %}</a>
+              <a href="{% url 'labels:labels' %}" class="btn btn-info w-100">{% translate "Управление" %}</a>
             </p>
           </div>
         </div>
@@ -47,7 +47,7 @@
           <div class="card-body">
             <h5 class="card-title">👥 {% translate "Пользователи" %}</h5>
             <p class="card-text">
-              <a href="{% url 'users' %}" class="btn btn-secondary w-100">{% translate "Список" %}</a>
+              <a href="{% url 'users:users' %}" class="btn btn-secondary w-100">{% translate "Список" %}</a>
             </p>
           </div>
         </div>
@@ -59,9 +59,9 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">🚀 {% translate "Быстрые действия" %}</h5>
-            <a href="{% url 'tasks_create' %}" class="btn btn-primary mb-2 w-100">{% translate "Создать задачу" %}</a>
-            <a href="{% url 'statuses_create' %}" class="btn btn-success mb-2 w-100">{% translate "Создать статус" %}</a>
-            <a href="{% url 'labels_create' %}" class="btn btn-info w-100">{% translate "Создать метку" %}</a>
+            <a href="{% url 'tasks:tasks_create' %}" class="btn btn-primary mb-2 w-100">{% translate "Создать задачу" %}</a>
+            <a href="{% url 'statuses:statuses_create' %}" class="btn btn-success mb-2 w-100">{% translate "Создать статус" %}</a>
+            <a href="{% url 'labels:labels_create' %}" class="btn btn-info w-100">{% translate "Создать метку" %}</a>
           </div>
         </div>
       </div>
@@ -79,7 +79,7 @@
             </p>
             <div class="d-grid gap-2">
               <a href="{% url 'login' %}" class="btn btn-primary btn-lg">{% translate "Войти" %}</a>
-              <a href="{% url 'create' %}" class="btn btn-outline-primary btn-lg">{% translate "Зарегистрироваться" %}</a>
+              <a href="{% url 'users:create' %}" class="btn btn-outline-primary btn-lg">{% translate "Зарегистрироваться" %}</a>
             </div>
           </div>
         </div>

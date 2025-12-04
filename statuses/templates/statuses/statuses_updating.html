@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+{% block title %}{% translate "Изменить" %}{% endblock %}
+
+{% block content %}
+  <h2 class="mb-4">{% translate "Изменение статуса" %}</h2>
+  {% if form.errors %}
+    <div>
+      <ul>
+      {% for error in form.errors %}
+        <li><strong>{{ error|escape }}</strong></li>
+      {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  <form action="{% url 'statuses:statuses:statuses_edit' pk=status.id %}" method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="{{ form.name.id_for_label }}" class="form-label">Имя</label>
+      <input type="text" name="name" id="{{ form.name.id_for_label }}" class="form-control" value="{{ form.name.value|default:'' }}" required>
+      {% if form.name.errors %}
+        <div class="text-danger">{{ form.name.errors }}</div>
+      {% endif %}
+    </div>
+    <button type="submit" id="submit-status-edit" class="btn btn-primary">Изменить</button>
+  </form>
+{% endblock %}
