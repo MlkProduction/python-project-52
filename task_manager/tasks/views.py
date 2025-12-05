@@ -15,7 +15,7 @@ MSG_TASK_AUTHOR_ONLY = "Задачу может удалить только ее
 
 
 @login_required  # NOSONAR
-def tasks_list(request): # NOSONAR
+def tasks_list(request):  # NOSONAR
     tasks_list = Task.objects.all()
 
     task_filter = TaskFilter(request.GET, queryset=tasks_list, request=request)
@@ -29,7 +29,7 @@ def tasks_list(request): # NOSONAR
 
 
 @login_required  # NOSONAR
-def tasks_detail(request, pk): # NOSONAR
+def tasks_detail(request, pk):  # NOSONAR
     task = get_object_or_404(Task, pk=pk)
     return render(request, "tasks/tasks_detail.html", {"task": task})
 
