@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-MSG_PASSWORDS_DONT_MATCH = "Пароли не совпадают"
+MSG_PASSWORDS_DONT_MATCH = "Пароли не совпадают"#NOSONAR
 
 
 class RegistrationForm(UserCreationForm):

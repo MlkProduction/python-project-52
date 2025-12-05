@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_http_methods
 
 from task_manager.tasks.filters import TaskFilter
 from task_manager.tasks.forms import TaskForm
@@ -34,6 +35,7 @@ def tasks_detail(request, pk):
 
 
 @login_required
+@require_http_methods(["GET", "POST"])
 def tasks_create(request):
     if request.method == "POST":
         form = TaskForm(request.POST)
@@ -51,6 +53,7 @@ def tasks_create(request):
 
 
 @login_required
+@require_http_methods(["GET", "POST"])
 def tasks_delete(request, pk):
     task = get_object_or_404(Task, pk=pk)
 
@@ -67,6 +70,7 @@ def tasks_delete(request, pk):
 
 
 @login_required
+@require_http_methods(["GET", "POST"])
 def tasks_edit(request, pk):
     task = get_object_or_404(Task, pk=pk)
     if request.method == "POST":

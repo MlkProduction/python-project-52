@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import ProtectedError
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_http_methods
 
 from task_manager.labels.forms import LabelForm
 from task_manager.labels.models import Label
@@ -21,6 +22,7 @@ def labels_list(request):
 
 
 @login_required
+@require_http_methods(["GET", "POST"])
 def labels_create(request):
     if request.method == "POST":
         form = LabelForm(request.POST)
@@ -35,6 +37,7 @@ def labels_create(request):
 
 
 @login_required
+@require_http_methods(["GET", "POST"])
 def labels_delete(request, pk):
     label = get_object_or_404(Label, pk=pk)
     if request.method == "POST":
@@ -53,6 +56,7 @@ def labels_delete(request, pk):
 
 
 @login_required
+@require_http_methods(["GET", "POST"])
 def labels_edit(request, pk):
     label = get_object_or_404(Label, pk=pk)
     if request.method == "POST":

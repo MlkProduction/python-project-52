@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import ProtectedError
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_http_methods
 
 from task_manager.statuses.forms import StatusForm
 from task_manager.statuses.models import Status
@@ -22,6 +23,7 @@ def statuses_list(request):
 
 
 @login_required
+@require_http_methods(["GET", "POST"])
 def statuses_create(request):
     if request.method == "POST":
         form = StatusForm(request.POST)
@@ -36,6 +38,7 @@ def statuses_create(request):
 
 
 @login_required
+@require_http_methods(["GET", "POST"])
 def statuses_delete(request, pk):
     status = get_object_or_404(Status, pk=pk)
     if request.method == "POST":
@@ -51,6 +54,7 @@ def statuses_delete(request, pk):
 
 
 @login_required
+@require_http_methods(["GET", "POST"])
 def statuses_edit(request, pk):
     status = get_object_or_404(Status, pk=pk)
     if request.method == "POST":

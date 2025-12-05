@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.db.models import ProtectedError
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.views.decorators.http import require_http_methods
 
 from task_manager.users.forms import RegistrationForm, UserUpdateForm
 
@@ -24,6 +25,7 @@ def users_list(request):
 
 
 @login_required
+@require_http_methods(["GET", "POST"])
 def users_edit(request, pk):
     user = get_object_or_404(User, pk=pk)
     if request.method == "POST":
@@ -39,6 +41,7 @@ def users_edit(request, pk):
 
 
 @login_required
+@require_http_methods(["GET", "POST"])
 def users_delete(request, pk):
     user = get_object_or_404(User, pk=pk)
 
@@ -60,6 +63,7 @@ def users_delete(request, pk):
     return render(request, "users/users_delete.html", {"user": user})
 
 
+@require_http_methods(["GET", "POST"])
 def users_create(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST)
