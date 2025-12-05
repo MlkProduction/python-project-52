@@ -9,6 +9,11 @@ from django.urls import reverse
 from task_manager.users.forms import RegistrationForm, UserUpdateForm
 
 USERS_LIST_URL = "users:users"
+MSG_USER_UPDATED = "Пользователь успешно изменен"
+MSG_USER_DELETED = "Пользователь успешно удален"
+MSG_USER_CREATED = "Пользователь успешно зарегистрирован"
+MSG_USER_PROTECTED = "Невозможно удалить пользователя, потому что он используется"
+MSG_NO_PERMISSION = "У вас нет прав для изменения другого пользователя."
 
 
 def users_list(request):
@@ -23,7 +28,7 @@ def users_edit(request, pk):
         form = UserUpdateForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Пользователь успешно изменен')
+            messages.success(request, MSG_USER_UPDATED)
             return redirect(USERS_LIST_URL)
     else:
         form = UserUpdateForm(instance=user)
@@ -36,20 +41,18 @@ def users_delete(request, pk):
     user = get_object_or_404(User, pk=pk)
 
     if user != request.user:
-        msg = "У вас нет прав для изменения другого пользователя."
-        messages.error(request, msg)
-        return redirect("users:users")
+        messages.error(request, MSG_NO_PERMISSION)
+        return redirect(USERS_LIST_URL)
 
     if request.method == "POST":
         try:
             user.delete()
             logout(request)
             _ = list(messages.get_messages(request))  # NOSONAR
-            messages.success(request, "Пользователь успешно удален")
+            messages.success(request, MSG_USER_DELETED)
             return redirect(reverse(USERS_LIST_URL))
         except ProtectedError:
-            msg = "Невозможно удалить пользователя, потому что он используется"
-            messages.error(request, msg)
+            messages.error(request, MSG_USER_PROTECTED)
             return redirect(reverse(USERS_LIST_URL))
 
     return render(request, "users/users_delete.html", {"user": user})
@@ -60,7 +63,7 @@ def users_create(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Пользователь успешно зарегистрирован')
+            messages.success(request, MSG_USER_CREATED)
             return redirect("login")
     else:
         form = RegistrationForm()

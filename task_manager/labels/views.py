@@ -5,9 +5,12 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from task_manager.labels.forms import LabelForm
 from task_manager.labels.models import Label
-from task_manager.tasks.models import Task
 
 LABELS_LIST_URL = "labels:labels"
+MSG_LABEL_CREATED = "Метка успешно создана"
+MSG_LABEL_UPDATED = "Метка успешно изменена"
+MSG_LABEL_DELETED = "Метка успешно удалена"
+MSG_LABEL_PROTECTED = "Невозможно удалить метку, потому что она используется"
 
 
 @login_required
@@ -22,7 +25,7 @@ def labels_create(request):
         form = LabelForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Метка успешно создана')
+            messages.success(request, MSG_LABEL_CREATED)
             return redirect(LABELS_LIST_URL)
     else:
         form = LabelForm()
@@ -34,17 +37,12 @@ def labels_create(request):
 def labels_delete(request, pk):
     label = get_object_or_404(Label, pk=pk)
     if request.method == "POST":
-        if Task.objects.filter(labels=label).exists():
-            msg = "Невозможно удалить метку, потому что она используется"
-            messages.error(request, msg)
-            return redirect(LABELS_LIST_URL)
         try:
             label.delete()
-            messages.success(request, 'Метка успешно удалена')
+            messages.success(request, MSG_LABEL_DELETED)
             return redirect(LABELS_LIST_URL)
         except ProtectedError:
-            msg = "Невозможно удалить метку, потому что она используется"
-            messages.error(request, msg)
+            messages.error(request, MSG_LABEL_PROTECTED)
             return redirect(LABELS_LIST_URL)
 
     return render(request, "labels/labels_delete.html", {"label": label})
@@ -57,7 +55,7 @@ def labels_edit(request, pk):
         form = LabelForm(request.POST, instance=label)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Метка успешно изменена')
+            messages.success(request, MSG_LABEL_UPDATED)
             return redirect(LABELS_LIST_URL)
     else:
         form = LabelForm(instance=label)

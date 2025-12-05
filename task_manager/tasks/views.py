@@ -7,6 +7,10 @@ from task_manager.tasks.forms import TaskForm
 from task_manager.tasks.models import Task
 
 TASKS_LIST_URL = "tasks:tasks"
+MSG_TASK_CREATED = "Задача успешно создана"
+MSG_TASK_UPDATED = "Задача успешно изменена"
+MSG_TASK_DELETED = "Задача успешно удалена"
+MSG_TASK_AUTHOR_ONLY = "Задачу может удалить только ее автор"
 
 
 @login_required
@@ -37,9 +41,8 @@ def tasks_create(request):
             task = form.save(commit=False)
             task.author = request.user
             task.save()
-            form.save_m2m()
             task.labels.set(form.cleaned_data['labels'])
-            messages.success(request, 'Задача успешно создана')
+            messages.success(request, MSG_TASK_CREATED)
             return redirect(TASKS_LIST_URL)
     else:
         form = TaskForm()
@@ -52,13 +55,13 @@ def tasks_delete(request, pk):
     task = get_object_or_404(Task, pk=pk)
 
     if task.author != request.user:
-        messages.error(request, "Задачу может удалить только ее автор")
-        return redirect("tasks:tasks")
+        messages.error(request, MSG_TASK_AUTHOR_ONLY)
+        return redirect(TASKS_LIST_URL)
 
     if request.method == "POST":
         task.delete()
-        messages.success(request, 'Задача успешно удалена')
-        return redirect("tasks:tasks")
+        messages.success(request, MSG_TASK_DELETED)
+        return redirect(TASKS_LIST_URL)
 
     return render(request, "tasks/tasks_delete.html", {"task": task})
 
@@ -71,7 +74,7 @@ def tasks_edit(request, pk):
         if form.is_valid():
             task = form.save()
             task.labels.set(form.cleaned_data['labels'])
-            messages.success(request, 'Задача успешно изменена')
+            messages.success(request, MSG_TASK_UPDATED)
             return redirect(TASKS_LIST_URL)
     else:
         form = TaskForm(instance=task)
