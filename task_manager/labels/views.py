@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from task_manager.labels.forms import LabelForm
 from task_manager.labels.models import Label
+from task_manager.tasks.models import Task
 
 LABELS_LIST_URL = "labels:labels"
 MSG_LABEL_CREATED = "Метка успешно создана"
@@ -37,6 +38,9 @@ def labels_create(request):
 def labels_delete(request, pk):
     label = get_object_or_404(Label, pk=pk)
     if request.method == "POST":
+        if Task.objects.filter(labels=label).exists():
+            messages.error(request, MSG_LABEL_PROTECTED)
+            return redirect(LABELS_LIST_URL)
         try:
             label.delete()
             messages.success(request, MSG_LABEL_DELETED)
