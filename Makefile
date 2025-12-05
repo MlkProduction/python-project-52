@@ -34,3 +34,5 @@ render-start:
 
 build:
 	./build.sh
+
+.PHONY: install migrate collectstatic setup start lint test test-coverage check render-start build
