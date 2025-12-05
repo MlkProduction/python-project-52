@@ -22,7 +22,7 @@ def labels_list(request):
 
 
 @login_required
-@require_http_methods(["GET", "POST"])  # NOSONAR - CSRF protected by Django middleware
+@require_http_methods(["GET", "POST"])  # NOSONAR
 def labels_create(request):
     if request.method == "POST":
         form = LabelForm(request.POST)
@@ -37,7 +37,7 @@ def labels_create(request):
 
 
 @login_required
-@require_http_methods(["GET", "POST"])  # NOSONAR - CSRF protected by Django middleware
+@require_http_methods(["GET", "POST"])  # NOSONAR
 def labels_delete(request, pk):
     label = get_object_or_404(Label, pk=pk)
     if request.method == "POST":
@@ -56,7 +56,7 @@ def labels_delete(request, pk):
 
 
 @login_required
-@require_http_methods(["GET", "POST"])  # NOSONAR - CSRF protected by Django middleware
+@require_http_methods(["GET", "POST"])  # NOSONAR
 def labels_edit(request, pk):
     label = get_object_or_404(Label, pk=pk)
     if request.method == "POST":
