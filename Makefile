@@ -20,14 +20,12 @@ lint:
 	uv run ruff check .
 
 test:
-	uv run manage.py test
-
-check: test lint
+	uv run pytest
 
 test-coverage:
-	uv run coverage run manage.py test task_manager
-	uv run coverage html
-	uv run coverage report
+	uv run pytest --cov=task_manager --cov-report=xml:coverage.xml
+
+check: test lint
 
 
 render-start:
