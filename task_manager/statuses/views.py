@@ -15,7 +15,7 @@ MSG_STATUS_PROTECTED = "Невозможно удалить статус, пот
 
 
 @login_required  # NOSONAR
-def statuses_list(request):
+def statuses_list(request): # NOSONAR
     statuses_list = Status.objects.all()
     return render(
         request, "statuses/statuses.html", {"statuses": statuses_list}

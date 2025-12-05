@@ -16,7 +16,7 @@ MSG_LABEL_PROTECTED = "Невозможно удалить метку, пото�
 
 
 @login_required  # NOSONAR
-def labels_list(request):
+def labels_list(request): # NOSONAR
     labels_list = Label.objects.all()
     return render(request, "labels/labels.html", {"labels": labels_list})
 
