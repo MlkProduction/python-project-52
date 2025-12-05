@@ -34,8 +34,9 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.projectKey=mlkproduction_python-project-52
-            -Dsonar.organization=mlkproduction
+            -Dsonar.projectKey=MlkProduction_python-project-52
+            -Dsonar.organization=MlkProduction
+            -Dsonar.branch.name=${{ github.ref_name }}
             -Dsonar.python.coverage.reportPaths=coverage.xml
             -Dsonar.coverage.exclusions=tests/**
             -Dsonar.exclusions=tests/**
