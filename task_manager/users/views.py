@@ -8,6 +8,8 @@ from django.urls import reverse
 
 from task_manager.users.forms import RegistrationForm, UserUpdateForm
 
+USERS_LIST_URL = "users:users"
+
 
 def users_list(request):
     users_list = User.objects.all()
@@ -22,7 +24,7 @@ def users_edit(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request, 'Пользователь успешно изменен')
-            return redirect("users:users")
+            return redirect(USERS_LIST_URL)
     else:
         form = UserUpdateForm(instance=user)
 
@@ -44,11 +46,11 @@ def users_delete(request, pk):
             logout(request)
             _ = list(messages.get_messages(request))  # NOSONAR
             messages.success(request, "Пользователь успешно удален")
-            return redirect(reverse("users:users"))
+            return redirect(reverse(USERS_LIST_URL))
         except ProtectedError:
             msg = "Невозможно удалить пользователя, потому что он используется"
             messages.error(request, msg)
-            return redirect(reverse("users:users"))
+            return redirect(reverse(USERS_LIST_URL))
 
     return render(request, "users/users_delete.html", {"user": user})
 

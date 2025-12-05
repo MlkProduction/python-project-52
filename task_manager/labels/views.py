@@ -7,6 +7,8 @@ from task_manager.labels.forms import LabelForm
 from task_manager.labels.models import Label
 from task_manager.tasks.models import Task
 
+LABELS_LIST_URL = "labels:labels"
+
 
 @login_required
 def labels_list(request):
@@ -21,7 +23,7 @@ def labels_create(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Метка успешно создана')
-            return redirect("labels:labels")
+            return redirect(LABELS_LIST_URL)
     else:
         form = LabelForm()
 
@@ -35,15 +37,15 @@ def labels_delete(request, pk):
         if Task.objects.filter(labels=label).exists():
             msg = "Невозможно удалить метку, потому что она используется"
             messages.error(request, msg)
-            return redirect("labels:labels")
+            return redirect(LABELS_LIST_URL)
         try:
             label.delete()
             messages.success(request, 'Метка успешно удалена')
-            return redirect("labels:labels")
+            return redirect(LABELS_LIST_URL)
         except ProtectedError:
             msg = "Невозможно удалить метку, потому что она используется"
             messages.error(request, msg)
-            return redirect("labels:labels")
+            return redirect(LABELS_LIST_URL)
 
     return render(request, "labels/labels_delete.html", {"label": label})
 
@@ -56,7 +58,7 @@ def labels_edit(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request, 'Метка успешно изменена')
-            return redirect("labels:labels")
+            return redirect(LABELS_LIST_URL)
     else:
         form = LabelForm(instance=label)
 

@@ -6,6 +6,8 @@ from task_manager.tasks.filters import TaskFilter
 from task_manager.tasks.forms import TaskForm
 from task_manager.tasks.models import Task
 
+TASKS_LIST_URL = "tasks:tasks"
+
 
 @login_required
 def tasks_list(request):
@@ -38,7 +40,7 @@ def tasks_create(request):
             form.save_m2m()
             task.labels.set(form.cleaned_data['labels'])
             messages.success(request, 'Задача успешно создана')
-            return redirect("tasks:tasks")
+            return redirect(TASKS_LIST_URL)
     else:
         form = TaskForm()
 
@@ -70,7 +72,7 @@ def tasks_edit(request, pk):
             task = form.save()
             task.labels.set(form.cleaned_data['labels'])
             messages.success(request, 'Задача успешно изменена')
-            return redirect("tasks:tasks")
+            return redirect(TASKS_LIST_URL)
     else:
         form = TaskForm(instance=task)
         form.fields['labels'].initial = task.labels.all()

@@ -6,6 +6,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from task_manager.statuses.forms import StatusForm
 from task_manager.statuses.models import Status
 
+STATUSES_LIST_URL = "statuses:statuses"
+
 
 @login_required
 def statuses_list(request):
@@ -22,7 +24,7 @@ def statuses_create(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Статус успешно создан')
-            return redirect("statuses:statuses")
+            return redirect(STATUSES_LIST_URL)
     else:
         form = StatusForm()
 
@@ -36,11 +38,11 @@ def statuses_delete(request, pk):
         try:
             status.delete()
             messages.success(request, 'Статус успешно удален')
-            return redirect("statuses:statuses")
+            return redirect(STATUSES_LIST_URL)
         except ProtectedError:
             msg = "Невозможно удалить статус, потому что он используется"
             messages.error(request, msg)
-            return redirect("statuses:statuses")
+            return redirect(STATUSES_LIST_URL)
 
     return render(request, "statuses/statuses_delete.html", {"status": status})
 
@@ -53,7 +55,7 @@ def statuses_edit(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request, 'Статус успешно изменен')
-            return redirect("statuses:statuses")
+            return redirect(STATUSES_LIST_URL)
     else:
         form = StatusForm(instance=status)
 
