@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
+MSG_PASSWORDS_DONT_MATCH = "Пароли не совпадают"
+
 
 class RegistrationForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True, label="Имя")
@@ -58,9 +60,8 @@ class UserUpdateForm(forms.ModelForm):
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
-        if password1 and password2:
-            if password1 != password2:
-                raise forms.ValidationError("Пароли не совпадают")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError(MSG_PASSWORDS_DONT_MATCH)
         return password2
 
     def save(self, commit=True):
