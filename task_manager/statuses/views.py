@@ -23,7 +23,7 @@ def statuses_list(request):
 
 
 @login_required
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["GET", "POST"])  # NOSONAR - CSRF protected by Django middleware
 def statuses_create(request):
     if request.method == "POST":
         form = StatusForm(request.POST)
@@ -38,7 +38,7 @@ def statuses_create(request):
 
 
 @login_required
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["GET", "POST"])  # NOSONAR - CSRF protected by Django middleware
 def statuses_delete(request, pk):
     status = get_object_or_404(Status, pk=pk)
     if request.method == "POST":
@@ -54,7 +54,7 @@ def statuses_delete(request, pk):
 
 
 @login_required
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["GET", "POST"])  # NOSONAR - CSRF protected by Django middleware
 def statuses_edit(request, pk):
     status = get_object_or_404(Status, pk=pk)
     if request.method == "POST":

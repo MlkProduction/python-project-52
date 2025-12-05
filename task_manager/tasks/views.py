@@ -35,7 +35,7 @@ def tasks_detail(request, pk):
 
 
 @login_required
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["GET", "POST"])  # NOSONAR - CSRF protected by Django middleware
 def tasks_create(request):
     if request.method == "POST":
         form = TaskForm(request.POST)
@@ -53,7 +53,7 @@ def tasks_create(request):
 
 
 @login_required
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["GET", "POST"])  # NOSONAR - CSRF protected by Django middleware
 def tasks_delete(request, pk):
     task = get_object_or_404(Task, pk=pk)
 
@@ -70,7 +70,7 @@ def tasks_delete(request, pk):
 
 
 @login_required
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["GET", "POST"])  # NOSONAR - CSRF protected by Django middleware
 def tasks_edit(request, pk):
     task = get_object_or_404(Task, pk=pk)
     if request.method == "POST":

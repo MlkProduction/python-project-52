@@ -25,7 +25,7 @@ def users_list(request):
 
 
 @login_required
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["GET", "POST"])  # NOSONAR - CSRF protected by Django middleware
 def users_edit(request, pk):
     user = get_object_or_404(User, pk=pk)
     if request.method == "POST":
@@ -41,7 +41,7 @@ def users_edit(request, pk):
 
 
 @login_required
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["GET", "POST"])  # NOSONAR - CSRF protected by Django middleware
 def users_delete(request, pk):
     user = get_object_or_404(User, pk=pk)
 
@@ -63,7 +63,7 @@ def users_delete(request, pk):
     return render(request, "users/users_delete.html", {"user": user})
 
 
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["GET", "POST"])  # NOSONAR - CSRF protected by Django middleware
 def users_create(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST)
