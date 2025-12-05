@@ -3,6 +3,8 @@
 
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=MlkProduction_python-project-52&metric=coverage)](https://sonarcloud.io/summary/new_code?id=MlkProduction_python-project-52)
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=MlkProduction_python-project-52&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=MlkProduction_python-project-52)
+
 ## Локальный запуск
 
 1. Установите зависимости uv
