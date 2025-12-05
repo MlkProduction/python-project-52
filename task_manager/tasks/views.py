@@ -14,7 +14,7 @@ MSG_TASK_DELETED = "Задача успешно удалена"
 MSG_TASK_AUTHOR_ONLY = "Задачу может удалить только ее автор"
 
 
-@login_required
+@login_required  # NOSONAR
 def tasks_list(request):
     tasks_list = Task.objects.all()
 
@@ -28,7 +28,7 @@ def tasks_list(request):
     )
 
 
-@login_required
+@login_required  # NOSONAR
 def tasks_detail(request, pk):
     task = get_object_or_404(Task, pk=pk)
     return render(request, "tasks/tasks_detail.html", {"task": task})

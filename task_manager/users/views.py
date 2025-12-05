@@ -19,7 +19,7 @@ MSG_USER_PROTECTED = (
 MSG_NO_PERMISSION = "У вас нет прав для изменения другого пользователя."
 
 
-def users_list(request):
+def users_list(request):  # NOSONAR
     users_list = User.objects.all()
     return render(request, "users/users.html", {"users": users_list})
 

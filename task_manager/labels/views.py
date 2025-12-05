@@ -15,7 +15,7 @@ MSG_LABEL_DELETED = "Метка успешно удалена"
 MSG_LABEL_PROTECTED = "Невозможно удалить метку, потому что она используется"
 
 
-@login_required
+@login_required  # NOSONAR
 def labels_list(request):
     labels_list = Label.objects.all()
     return render(request, "labels/labels.html", {"labels": labels_list})

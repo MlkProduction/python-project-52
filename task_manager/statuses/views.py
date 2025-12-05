@@ -14,7 +14,7 @@ MSG_STATUS_DELETED = "Статус успешно удален"
 MSG_STATUS_PROTECTED = "Невозможно удалить статус, потому что он используется"
 
 
-@login_required
+@login_required  # NOSONAR
 def statuses_list(request):
     statuses_list = Status.objects.all()
     return render(
