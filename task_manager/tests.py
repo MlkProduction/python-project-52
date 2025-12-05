@@ -6,6 +6,8 @@ from task_manager.labels.models import Label
 from task_manager.statuses.models import Status
 from task_manager.tasks.models import Task
 
+TEST_PASSWORD = "test"  # NOSONAR - test password for test fixtures
+
 
 class UserCRUDTestCase(TestCase):
     def test_create_user(self):
@@ -28,10 +30,10 @@ class UserCRUDTestCase(TestCase):
     def test_update_user(self):
         client = Client()
         user = User.objects.create_user(
-            username='test', password='test',
+            username='test', password=TEST_PASSWORD,
             first_name='Test', last_name='User'
         )
-        client.login(username='test', password='test')
+        client.login(username='test', password=TEST_PASSWORD)
         data = {
             'username': 'updated',
             'first_name': 'Updated',
@@ -46,10 +48,10 @@ class UserCRUDTestCase(TestCase):
     def test_delete_user(self):
         client = Client()
         user = User.objects.create_user(
-            username='test', password='test',
+            username='test', password=TEST_PASSWORD,
             first_name='Test', last_name='User'
         )
-        client.login(username='test', password='test')
+        client.login(username='test', password=TEST_PASSWORD)
         response = client.post(
             reverse('users:users_delete', kwargs={'pk': user.pk})
         )
@@ -59,23 +61,23 @@ class UserCRUDTestCase(TestCase):
 class StatusesCRUDTestCase(TestCase):
     def test_create_status(self):
         client = Client()
-        User.objects.create_user(username='test', password='test')
-        client.login(username='test', password='test')
+        User.objects.create_user(username='test', password=TEST_PASSWORD)
+        client.login(username='test', password=TEST_PASSWORD)
         data = {'name': 'new status'}
         response = client.post(reverse('statuses:statuses_create'), data=data)
         self.assertEqual(response.status_code, 302)
 
     def test_read_statuses(self):
         client = Client()
-        User.objects.create_user(username='test', password='test')
-        client.login(username='test', password='test')
+        User.objects.create_user(username='test', password=TEST_PASSWORD)
+        client.login(username='test', password=TEST_PASSWORD)
         response = client.get(reverse('statuses:statuses'))
         self.assertEqual(response.status_code, 200)
 
     def test_update_status(self):
         client = Client()
-        User.objects.create_user(username='test', password='test')
-        client.login(username='test', password='test')
+        User.objects.create_user(username='test', password=TEST_PASSWORD)
+        client.login(username='test', password=TEST_PASSWORD)
         status = Status.objects.create(name='test status')
         data = {'name': 'updated status'}
         response = client.post(
@@ -86,8 +88,8 @@ class StatusesCRUDTestCase(TestCase):
 
     def test_delete_status(self):
         client = Client()
-        User.objects.create_user(username='test', password='test')
-        client.login(username='test', password='test')
+        User.objects.create_user(username='test', password=TEST_PASSWORD)
+        client.login(username='test', password=TEST_PASSWORD)
         status = Status.objects.create(name='test status')
         response = client.post(
             reverse('statuses:statuses_delete', kwargs={'pk': status.pk})
@@ -98,8 +100,8 @@ class StatusesCRUDTestCase(TestCase):
 class TasksCRUDTestCase(TestCase):
     def test_create_task(self):
         client = Client()
-        user = User.objects.create_user(username='test', password='test')
-        client.login(username='test', password='test')
+        user = User.objects.create_user(username='test', password=TEST_PASSWORD)
+        client.login(username='test', password=TEST_PASSWORD)
         status = Status.objects.create(name='test status')
         data = {
             'name': 'new task',
@@ -111,15 +113,15 @@ class TasksCRUDTestCase(TestCase):
 
     def test_read_tasks(self):
         client = Client()
-        User.objects.create_user(username='test', password='test')
-        client.login(username='test', password='test')
+        User.objects.create_user(username='test', password=TEST_PASSWORD)
+        client.login(username='test', password=TEST_PASSWORD)
         response = client.get(reverse('tasks:tasks'))
         self.assertEqual(response.status_code, 200)
 
     def test_update_task(self):
         client = Client()
-        user = User.objects.create_user(username='test', password='test')
-        client.login(username='test', password='test')
+        user = User.objects.create_user(username='test', password=TEST_PASSWORD)
+        client.login(username='test', password=TEST_PASSWORD)
         status = Status.objects.create(name='test status')
         task = Task.objects.create(
             name='test task', status=status, author=user
@@ -137,8 +139,8 @@ class TasksCRUDTestCase(TestCase):
 
     def test_delete_task(self):
         client = Client()
-        user = User.objects.create_user(username='test', password='test')
-        client.login(username='test', password='test')
+        user = User.objects.create_user(username='test', password=TEST_PASSWORD)
+        client.login(username='test', password=TEST_PASSWORD)
         status = Status.objects.create(name='test status')
         task = Task.objects.create(
             name='test task', status=status, author=user
@@ -152,23 +154,23 @@ class TasksCRUDTestCase(TestCase):
 class LabelsCRUDTestCase(TestCase):
     def test_create_label(self):
         client = Client()
-        User.objects.create_user(username='test', password='test')
-        client.login(username='test', password='test')
+        User.objects.create_user(username='test', password=TEST_PASSWORD)
+        client.login(username='test', password=TEST_PASSWORD)
         data = {'name': 'new label'}
         response = client.post(reverse('labels:labels_create'), data=data)
         self.assertEqual(response.status_code, 302)
 
     def test_read_labels(self):
         client = Client()
-        User.objects.create_user(username='test', password='test')
-        client.login(username='test', password='test')
+        User.objects.create_user(username='test', password=TEST_PASSWORD)
+        client.login(username='test', password=TEST_PASSWORD)
         response = client.get(reverse('labels:labels'))
         self.assertEqual(response.status_code, 200)
 
     def test_update_label(self):
         client = Client()
-        User.objects.create_user(username='test', password='test')
-        client.login(username='test', password='test')
+        User.objects.create_user(username='test', password=TEST_PASSWORD)
+        client.login(username='test', password=TEST_PASSWORD)
         label = Label.objects.create(name='test label')
         data = {'name': 'updated label'}
         response = client.post(
@@ -179,8 +181,8 @@ class LabelsCRUDTestCase(TestCase):
 
     def test_delete_label(self):
         client = Client()
-        User.objects.create_user(username='test', password='test')
-        client.login(username='test', password='test')
+        User.objects.create_user(username='test', password=TEST_PASSWORD)
+        client.login(username='test', password=TEST_PASSWORD)
         label = Label.objects.create(name='test label')
         response = client.post(
             reverse('labels:labels_delete', kwargs={'pk': label.pk})
