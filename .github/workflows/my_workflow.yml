@@ -18,9 +18,13 @@ jobs:
           pip install uv
           make install
       - name: Run linter and pytest
+        env:
+          SECRET_KEY: test-secret-key-for-ci
         run: |
           make check
       - name: Run test coverage
+        env:
+          SECRET_KEY: test-secret-key-for-ci
         run: |
           make test-coverage
 
